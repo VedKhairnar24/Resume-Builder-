@@ -1,0 +1,65 @@
+/* Home page styles (create this file to resolve import) */
+/* ...existing code... */
+.home-page { font-family: Inter, system-ui, Arial; color:#111; line-height:1.4; }
+.hero { background: linear-gradient(90deg,#f6fbff,#fff); padding:48px 16px; }
+.hero-inner { max-width:1200px; margin:0 auto; display:flex; gap:24px; align-items:center; justify-content:space-between; }
+.hero-copy { max-width:560px; }
+.hero h1 { font-size:2.2rem; margin:0 0 12px; }
+.sub { color:#4b5563; margin-bottom:16px; }
+.cta-btn { display:inline-block; background:#0b74ff; color:#fff; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:600; box-shadow:0 6px 18px rgba(11,116,255,0.14); transition:transform .14s ease; }
+.cta-btn:hover { transform:translateY(-3px); }
+
+.hero-preview { width:320px; }
+
+.features { padding:40px 16px; }
+.container-grid { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.feature { background:#fff; padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(16,24,40,0.06); text-align:center; }
+.feature .icon { width:36px; height:36px; fill:#0b74ff; margin-bottom:8px; }
+
+.templates { padding:40px 16px; max-width:1100px; margin:0 auto; }
+.section-head { margin-bottom:12px; }
+
+.carousel { margin-top:8px; }
+.carousel-controls { display:flex; align-items:center; gap:12px; }
+.carousel-controls button { background:#fff; border:1px solid #e5e7eb; padding:8px 12px; border-radius:8px; cursor:pointer; }
+.carousel-track { display:flex; gap:12px; overflow:hidden; flex:1; }
+.carousel-item { min-width:200px; transition:transform .2s ease; opacity:.6; }
+.carousel-item.active { transform:scale(1.03); opacity:1; }
+
+.tpl-thumb { width:200px; text-align:left; background:#fff; border-radius:10px; border:1px solid #e6edf5; padding:0; cursor:pointer; overflow:hidden; }
+.tpl-header { height:60px; }
+.tpl-body { padding:12px; }
+.tpl-thumb h4 { margin:0 0 6px; }
+.muted { color:#6b7280; font-size:0.95rem; }
+
+.resume-card { background:#fff; padding:18px; border-radius:10px; box-shadow:0 8px 32px rgba(16,24,40,0.06); border:1px solid #eef2f7; max-width:520px; }
+.resume-card.highlight { transform:scale(.99); transition:transform .18s ease; }
+.resume-card:hover { transform:scale(1.01); }
+.rc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.rc-header h2 { margin:0; }
+.contact { text-align:right; font-size:.9rem; color:#374151; }
+.rc-item { margin-bottom:10px; }
+.skills { color:#111; }
+
+.how-it-works, .testimonials { padding:36px 16px; max-width:1100px; margin:0 auto; }
+.test-grid { display:flex; gap:16px; }
+.test-card { background:#fff; padding:14px; border-radius:10px; flex:1; box-shadow:0 6px 18px rgba(16,24,40,0.05); display:flex; gap:12px; align-items:center; }
+.test-card img { width:56px; height:56px; border-radius:50%; object-fit:cover; }
+
+.site-footer { padding:18px; display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:24px auto 60px; color:#6b7280; }
+.footer-links a { margin-left:12px; color:#374151; text-decoration:none; }
+
+.modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.5); z-index:60; }
+.modal-body { background:#fff; border-radius:10px; max-width:920px; width:94%; padding:18px; }
+.modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.modal-preview { background:#f8fafc; padding:12px; border-radius:8px; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .hero-inner { flex-direction:column-reverse; text-align:center; gap:20px; }
+  .container-grid { grid-template-columns:1fr; }
+  .test-grid { flex-direction:column; }
+  .carousel-item, .tpl-thumb { min-width:140px; }
+  .hero-preview { width:260px; margin:0 auto; }
+}
+/* ...existing code... */

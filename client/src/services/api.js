@@ -88,6 +88,15 @@ export const createResume = async (resumeData) => {
   }
 };
 
+export const saveResume = async (resumeData) => {
+  try {
+    const response = await api.post('/resumes', resumeData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 export const updateResume = async (id, resumeData) => {
   try {
     const response = await api.put(`/resumes/${id}`, resumeData);
