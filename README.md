@@ -1,4 +1,4 @@
-# Resume Builder
+# gitResume Builder
 
 A full-stack web application for creating and managing professional resumes. Built with React, Node.js, Express, and MongoDB.
 
