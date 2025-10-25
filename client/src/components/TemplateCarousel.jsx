@@ -1,68 +1,102 @@
-import React, { useState } from 'react';
-import ResumeSampleCard from './ResumeSampleCard';
-import '../styles/Home.css';
+import React, { useState } from "react";
 
-const templates = [
-  { id: 1, name: 'Modern', accent: '#0b74ff' },
-  { id: 2, name: 'Minimal', accent: '#ff7a59' },
-  { id: 3, name: 'Professional', accent: '#00b894' }
-];
+const TemplateSection = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
 
-const TemplatePreview = ({ tpl, onClick }) => (
-  <button className="tpl-thumb" onClick={() => onClick(tpl)}>
-    <div className="tpl-header" style={{ background: tpl.accent }} />
-    <div className="tpl-body">
-      <h4>{tpl.name}</h4>
-      <p className="muted">One-column, ATS friendly</p>
-    </div>
-  </button>
-);
-
-const TemplateCarousel = () => {
-  const [index, setIndex] = useState(0);
-  const [modal, setModal] = useState(null);
-
-  const next = () => setIndex((i) => (i + 1) % templates.length);
-  const prev = () => setIndex((i) => (i - 1 + templates.length) % templates.length);
+  const templates = [
+    {
+      img: "https://cdn.pixabay.com/photo/2016/10/27/22/52/resume-1773728_1280.png",
+      title: "Classic Resume",
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2017/09/04/18/32/resume-template-2710590_1280.jpg",
+      title: "Modern Resume",
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2016/10/31/20/36/cv-1784163_1280.png",
+      title: "Minimal Resume",
+    },
+  ];
 
   return (
-    <div className="carousel">
-      <div className="carousel-controls">
-        <button onClick={prev} aria-label="previous">‹</button>
-        <div className="carousel-track">
-          {templates.map((tpl, i) => (
-            <div key={tpl.id} className={`carousel-item ${i === index ? 'active' : ''}`}>
-              <TemplatePreview tpl={tpl} onClick={setModal} />
+    <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white text-center relative overflow-hidden">
+      {/* Decorative background blur */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-teal-100 rounded-full blur-3xl opacity-20 -z-10"></div>
+
+      <div className="max-w-6xl mx-auto px-6 relative">
+        {/* Heading */}
+        <h2
+          className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          data-aos="fade-up"
+        >
+          Stunning <span className="text-teal-500">Templates</span>
+        </h2>
+        <p
+          className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          Pick a professional design that fits your style and career goals.
+        </p>
+
+        {/* Template Gallery */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 md:px-0"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          {templates.map((template, index) => (
+            <div
+              key={index}
+              onClick={() => setSelectedImage(template.img)}
+              className="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white cursor-pointer"
+            >
+              <img
+                src={template.img}
+                alt={template.title}
+                className="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute bottom-4 left-4 text-left">
+                <h3 className="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {template.title}
+                </h3>
+              </div>
             </div>
           ))}
         </div>
-        <button onClick={next} aria-label="next">›</button>
+
+        {/* Call to Action */}
+        <div className="mt-16" data-aos="fade-up" data-aos-delay="300">
+          <button className="px-8 py-3 bg-teal-500 text-white font-medium rounded-full hover:bg-teal-600 transition-colors duration-300 shadow-md">
+            Explore More Templates
+          </button>
+        </div>
       </div>
 
-      <div className="tpl-thumbs">
-        {templates.map((t) => (
-          <TemplatePreview key={t.id} tpl={t} onClick={setModal} />
-        ))}
-      </div>
-
-      {modal && (
-        <div className="modal" role="dialog" onClick={() => setModal(null)}>
-          <div className="modal-body" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-head">
-              <h3>{modal.name} Template Preview</h3>
-              <button onClick={() => setModal(null)}>Close</button>
-            </div>
-            <div className="modal-preview">
-              {/* Simple live rendering of same sample but could be replaced with template-specific layout */}
-              <div style={{ borderLeft: `6px solid ${modal.accent}` }}>
-                <ResumeSampleCard />
-              </div>
-            </div>
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-5xl mx-auto px-4">
+            <img
+              src={selectedImage}
+              alt="Template Preview"
+              className="rounded-xl max-h-[85vh] w-auto shadow-2xl border border-gray-200"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 transition"
+            >
+              ✕
+            </button>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
-export default TemplateCarousel;
+export default TemplateSection;
