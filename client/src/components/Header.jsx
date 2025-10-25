@@ -1,41 +1,165 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
   const { isAuthenticated, user, signOut } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinkClasses = ({ isActive }) =>
+    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+      isActive
+        ? 'text-teal-500 bg-gray-900'
+        : 'text-gray-300 hover:text-white hover:bg-gray-700'
+    }`;
 
   return (
-    <header className="bg-gray-800 text-white shadow-md">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="text-xl font-bold">Resume Builder</Link>
-          <nav className="flex space-x-4">
-            <Link to="/" className="hover:text-gray-300">Home</Link>
-            {isAuthenticated ? (
-              <>
-                <Link to="/create-resume" className="hover:text-gray-300">Create Resume</Link>
-                <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm">Welcome, {user?.name}</span>
-                  <button
-                    onClick={signOut}
-                    className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition duration-200"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="hover:text-gray-300">Login</Link>
-                <Link to="/register" className="hover:text-gray-300">Register</Link>
-              </>
+    <nav className="bg-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <span className="text-2xl font-bold text-white">
+                Resume<span className="text-teal-500">Builder</span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-4">
+            <NavLink to="/" className={navLinkClasses} end>
+              Home
+            </NavLink>
+            <NavLink to="/templates" className={navLinkClasses}>
+              Templates
+            </NavLink>
+            {isAuthenticated && (
+              <NavLink to="/create-resume" className={navLinkClasses}>
+                Create Resume
+              </NavLink>
             )}
-          </nav>
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-300 text-sm">
+                  Welcome, <span className="font-medium text-white">{user?.name}</span>
+                </span>
+                <button
+                  onClick={signOut}
+                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors duration-200"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <NavLink
+                  to="/login"
+                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                >
+                  Sign In
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 transition-colors duration-200"
+                >
+                  Sign Up
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {!isMenuOpen ? (
+                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              ) : (
+                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </div>
-    </header>
+
+      {/* Mobile menu */}
+      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <NavLink
+            to="/"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+            end
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/templates"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Templates
+          </NavLink>
+          {isAuthenticated && (
+            <NavLink
+              to="/create-resume"
+              className={navLinkClasses}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Create Resume
+            </NavLink>
+          )}
+        </div>
+        <div className="px-4 pt-4 pb-3 border-t border-gray-700">
+          {isAuthenticated ? (
+            <div className="space-y-3">
+              <div className="text-gray-400 text-sm">
+                Signed in as <span className="text-white font-medium">{user?.name}</span>
+              </div>
+              <button
+                onClick={() => {
+                  signOut();
+                  setIsMenuOpen(false);
+                }}
+                className="block w-full px-4 py-2 text-center rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors duration-200"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <NavLink
+                to="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-2 text-center rounded-md text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200"
+              >
+                Sign In
+              </NavLink>
+              <NavLink
+                to="/register"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-2 text-center rounded-md text-white bg-teal-500 hover:bg-teal-600 transition-colors duration-200"
+              >
+                Sign Up
+              </NavLink>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

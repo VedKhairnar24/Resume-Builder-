@@ -350,9 +350,9 @@ const Home = () => {
       <p className="text-gray-700 mb-6 text-lg">
         Ready to start your own success story?
       </p>
-      <button className="px-8 py-3 bg-teal-500 text-white font-medium rounded-full hover:bg-teal-600 transition-colors duration-300 shadow-md">
+      <a href="/create-resume" className="px-8 py-3 bg-teal-500 text-white font-medium rounded-full hover:bg-teal-600 transition-colors duration-300 shadow-md">
         Build Your Resume Now
-      </button>
+      </a>
     </div>
   </div>
 </section>

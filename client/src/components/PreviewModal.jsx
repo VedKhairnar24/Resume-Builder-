@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { TEMPLATES } from './templates';
 
-const PreviewModal = ({ data, selectedTemplate, onClose }) => {
-  const { personalInfo, education, experience, skills, projects, certifications, achievements } = data;
+const PreviewModal = ({ template, onClose, onPrev, onNext, onDownload }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const { personalInfo, education, experience, skills, projects, certifications, achievements } = template;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Preview ${template.name}`}
+    >
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-2xl font-bold text-gray-900">Resume Preview</h2>
@@ -19,9 +32,9 @@ const PreviewModal = ({ data, selectedTemplate, onClose }) => {
 
         <div className="p-6">
           {(() => {
-            const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === selectedTemplate)?.component;
+            const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === template.id)?.component;
             return SelectedTemplateComponent ? (
-              <SelectedTemplateComponent data={data} />
+              <SelectedTemplateComponent data={template} />
             ) : (
               <div className="text-center py-8">
                 <p className="text-gray-500">No template selected</p>
