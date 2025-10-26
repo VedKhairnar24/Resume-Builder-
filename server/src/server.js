@@ -1,19 +1,24 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
+import session from 'express-session';
+import passport from './config/passport.js';
 
-// Load environment variables
 dotenv.config();
 
-// Import route files
-import resumeRoutes from './routes/resumeRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-
-// Create Express app
 const app = express();
+
+// Session configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Middleware
 app.use(helmet());
@@ -29,6 +34,10 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));
+
+// Import route files
+import resumeRoutes from './routes/resumeRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 // Mount Routes
 app.use('/api/resumes', resumeRoutes);

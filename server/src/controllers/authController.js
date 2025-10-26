@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { sendEmailVerification, sendPasswordReset, sendWelcomeEmail } from '../services/emailService.js';
 import { auditLogger } from '../middleware/security.js';
+import passport from '../config/passport.js';
+import { generate2FASecret, generateQRCode, verify2FAToken, generateBackupCodes, verifyBackupCode } from '../services/twoFactorService.js';
 
 // @desc    Register user
 // @route   POST /api/auth/register
@@ -488,23 +490,304 @@ export const exportUserData = async (req, res) => {
   }
 };
 
-// Get token from model, create cookie and send response
-const sendTokenResponse = (user, statusCode, res) => {
-  // Create token
+// @desc    Google OAuth login
+// @route   GET /api/auth/google
+// @access  Public
+export const googleAuth = passport.authenticate('google', {
+  scope: ['profile', 'email']
+});
+
+// @desc    Google OAuth callback
+// @route   GET /api/auth/google/callback
+// @access  Public
+export const googleCallback = (req, res, next) => {
+  passport.authenticate('google', { session: false }, (err, user) => {
+    if (err) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
+    }
+    
+    if (!user) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
+    }
+
+    // Update last login
+    user.updateLastLogin();
+
+    // Generate JWT token
+    const token = user.getSignedJwtToken();
+    
+    // Redirect to frontend with token
+    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=google`);
+  })(req, res, next);
+};
+
+// @desc    LinkedIn OAuth login
+// @route   GET /api/auth/linkedin
+// @access  Public
+export const linkedinAuth = passport.authenticate('linkedin');
+
+// @desc    LinkedIn OAuth callback
+// @route   GET /api/auth/linkedin/callback
+// @access  Public
+export const linkedinCallback = (req, res, next) => {
+  passport.authenticate('linkedin', { session: false }, (err, user) => {
+    if (err) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
+    }
+    
+    if (!user) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
+    }
+
+    // Update last login
+    user.updateLastLogin();
+
+    // Generate JWT token
   const token = user.getSignedJwtToken();
 
-  res.status(statusCode).json({
-    success: true,
-    token,
-    data: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      profilePicture: user.profilePicture,
-      careerProfile: user.careerProfile,
-      preferences: user.preferences,
-      subscription: user.subscription
+    // Redirect to frontend with token
+    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=linkedin`);
+  })(req, res, next);
+};
+
+// @desc    GitHub OAuth login
+// @route   GET /api/auth/github
+// @access  Public
+export const githubAuth = passport.authenticate('github', {
+  scope: ['user:email']
+});
+
+// @desc    GitHub OAuth callback
+// @route   GET /api/auth/github/callback
+// @access  Public
+export const githubCallback = (req, res, next) => {
+  passport.authenticate('github', { session: false }, (err, user) => {
+    if (err) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
     }
-  });
+    
+    if (!user) {
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
+    }
+
+    // Update last login
+    user.updateLastLogin();
+
+    // Generate JWT token
+    const token = user.getSignedJwtToken();
+    
+    // Redirect to frontend with token
+    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=github`);
+  })(req, res, next);
+};
+
+// @desc    Setup 2FA
+// @route   POST /api/auth/2fa/setup
+// @access  Private
+export const setup2FA = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('+twoFactorSecret');
+    
+    if (user.twoFactorEnabled) {
+      return res.status(400).json({
+        success: false,
+        error: 'Two-factor authentication is already enabled'
+      });
+    }
+
+    // Generate 2FA secret
+    const { secret, qrCodeUrl } = generate2FASecret(user);
+    
+    // Generate QR code
+    const qrCodeDataURL = await generateQRCode(qrCodeUrl);
+    
+    // Generate backup codes
+    const backupCodes = generateBackupCodes();
+    
+    // Save secret and backup codes to user
+    user.twoFactorSecret = secret;
+    user.twoFactorBackupCodes = backupCodes;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: {
+        secret: secret,
+        qrCode: qrCodeDataURL,
+        backupCodes: backupCodes
+      }
+    });
+  } catch (err) {
+    console.error('Setup 2FA error:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// @desc    Verify 2FA setup
+// @route   POST /api/auth/2fa/verify
+// @access  Private
+export const verify2FASetup = async (req, res) => {
+  try {
+    const { token } = req.body;
+    const user = await User.findById(req.user.id).select('+twoFactorSecret');
+    
+    if (!user.twoFactorSecret) {
+      return res.status(400).json({
+        success: false,
+        error: '2FA setup not initiated'
+      });
+    }
+
+    // Verify token
+    const isValid = verify2FAToken(user.twoFactorSecret, token);
+    
+    if (!isValid) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid verification code'
+      });
+    }
+
+    // Enable 2FA
+    user.twoFactorEnabled = true;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Two-factor authentication enabled successfully'
+    });
+  } catch (err) {
+    console.error('Verify 2FA setup error:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// @desc    Disable 2FA
+// @route   POST /api/auth/2fa/disable
+// @access  Private
+export const disable2FA = async (req, res) => {
+  try {
+    const { password, token } = req.body;
+    const user = await User.findById(req.user.id).select('+password +twoFactorSecret');
+    
+    if (!user.twoFactorEnabled) {
+      return res.status(400).json({
+        success: false,
+        error: 'Two-factor authentication is not enabled'
+      });
+    }
+
+    // Verify password
+    const isPasswordValid = await user.matchPassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid password'
+      });
+    }
+
+    // Verify 2FA token
+    const isTokenValid = verify2FAToken(user.twoFactorSecret, token);
+    if (!isTokenValid) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid verification code'
+      });
+    }
+
+    // Disable 2FA
+    user.twoFactorEnabled = false;
+    user.twoFactorSecret = undefined;
+    user.twoFactorBackupCodes = [];
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Two-factor authentication disabled successfully'
+    });
+  } catch (err) {
+    console.error('Disable 2FA error:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// @desc    Verify 2FA token for login
+// @route   POST /api/auth/2fa/verify-login
+// @access  Public
+export const verify2FALogin = async (req, res) => {
+  try {
+    const { email, token, backupCode } = req.body;
+    
+    const user = await User.findOne({ email }).select('+twoFactorSecret +twoFactorBackupCodes');
+    
+    if (!user || !user.twoFactorEnabled) {
+      return res.status(400).json({
+        success: false,
+        error: '2FA not enabled for this account'
+      });
+    }
+
+    let isValid = false;
+
+    if (backupCode) {
+      // Verify backup code
+      isValid = verifyBackupCode(user.twoFactorBackupCodes, backupCode);
+      if (isValid) {
+        await user.save(); // Save updated backup codes
+      }
+    } else if (token) {
+      // Verify 2FA token
+      isValid = verify2FAToken(user.twoFactorSecret, token);
+    }
+
+    if (!isValid) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid verification code'
+      });
+    }
+
+    // Update last login
+    await user.updateLastLogin();
+
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    console.error('Verify 2FA login error:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// @desc    Get 2FA status
+// @route   GET /api/auth/2fa/status
+// @access  Private
+export const get2FAStatus = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    
+    res.status(200).json({
+    success: true,
+      data: {
+        enabled: user.twoFactorEnabled,
+        hasBackupCodes: user.twoFactorBackupCodes && user.twoFactorBackupCodes.length > 0
+      }
+    });
+  } catch (err) {
+    console.error('Get 2FA status error:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
 };

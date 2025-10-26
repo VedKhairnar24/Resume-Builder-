@@ -136,6 +136,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     select: false
   },
+  twoFactorBackupCodes: [{
+    type: String,
+    select: false
+  }],
   loginAttempts: {
     type: Number,
     default: 0
