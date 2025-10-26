@@ -3,34 +3,41 @@ import { useController } from 'react-hook-form';
 
 const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900">Work Experience</h2>
+        <h2 className="text-xl font-bold text-gray-900">Work Experience</h2>
         <button
           type="button"
           onClick={onAdd}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-all duration-200 font-semibold shadow-sm flex items-center space-x-2"
         >
-          + Add Experience
+          <span>+</span>
+          <span>Add Experience</span>
         </button>
       </div>
 
       {fields.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          <p>No work experience entries yet. Click "Add Experience" to get started.</p>
+        <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+          <div className="text-gray-400 mb-3">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+            </svg>
+          </div>
+          <p className="text-lg font-medium">No work experience entries yet</p>
+          <p className="text-sm">Click "Add Experience" to get started</p>
         </div>
       ) : (
         <div className="space-y-6">
           {fields.map((field, index) => (
-            <div key={field.id} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Experience Entry #{index + 1}
+            <div key={field.id} className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Experience #{index + 1}
                 </h3>
                 <button
                   type="button"
                   onClick={() => onRemove(index)}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  className="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
                 >
                   Remove
                 </button>
@@ -49,7 +56,7 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Job title is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.experience?.[index]?.position ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="e.g., Software Engineer"
@@ -73,7 +80,7 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Company is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.experience?.[index]?.company ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="e.g., Google Inc."
@@ -97,7 +104,7 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Start date is required' }
                     }).field}
                     type="month"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.experience?.[index]?.startDate ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />
@@ -119,7 +126,7 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       control
                     }).field}
                     type="month"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                   />
                   <p className="mt-1 text-sm text-gray-500">
                     Leave empty if currently working
@@ -138,7 +145,7 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Job description is required' }
                     }).field}
                     rows={4}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.experience?.[index]?.description ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Describe your key responsibilities, achievements, and impact in this role..."

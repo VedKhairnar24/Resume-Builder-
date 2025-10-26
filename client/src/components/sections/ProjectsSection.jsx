@@ -3,34 +3,41 @@ import { useController } from 'react-hook-form';
 
 const ProjectsSection = ({ control, errors, fields, onAdd, onRemove }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900">Projects</h2>
+        <h2 className="text-xl font-bold text-gray-900">Projects</h2>
         <button
           type="button"
           onClick={onAdd}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-all duration-200 font-semibold shadow-sm flex items-center space-x-2"
         >
-          + Add Project
+          <span>+</span>
+          <span>Add Project</span>
         </button>
       </div>
 
       {fields.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          <p>No projects added yet. Click "Add Project" to get started.</p>
+        <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+          <div className="text-gray-400 mb-3">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <p className="text-lg font-medium">No projects added yet</p>
+          <p className="text-sm">Click "Add Project" to get started</p>
         </div>
       ) : (
         <div className="space-y-6">
           {fields.map((field, index) => (
-            <div key={field.id} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+            <div key={field.id} className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Project #{index + 1}
                 </h3>
                 <button
                   type="button"
                   onClick={() => onRemove(index)}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  className="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
                 >
                   Remove
                 </button>
@@ -49,7 +56,7 @@ const ProjectsSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Project title is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.projects?.[index]?.title ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="e.g., E-commerce Website"
@@ -72,7 +79,7 @@ const ProjectsSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       control
                     }).field}
                     type="url"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                     placeholder="https://github.com/username/project"
                   />
                 </div>
@@ -88,7 +95,7 @@ const ProjectsSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       control
                     }).field}
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                     placeholder="React, Node.js, MongoDB, AWS"
                   />
                   <p className="mt-1 text-sm text-gray-500">
@@ -108,7 +115,7 @@ const ProjectsSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Project description is required' }
                     }).field}
                     rows={4}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.projects?.[index]?.description ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Describe what the project does, your role, key features, and any notable achievements..."

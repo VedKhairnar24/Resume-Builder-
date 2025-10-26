@@ -3,34 +3,41 @@ import { useController } from 'react-hook-form';
 
 const CertificationsSection = ({ control, errors, fields, onAdd, onRemove }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900">Certifications</h2>
+        <h2 className="text-xl font-bold text-gray-900">Certifications</h2>
         <button
           type="button"
           onClick={onAdd}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-all duration-200 font-semibold shadow-sm flex items-center space-x-2"
         >
-          + Add Certification
+          <span>+</span>
+          <span>Add Certification</span>
         </button>
       </div>
 
       {fields.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          <p>No certifications added yet. Click "Add Certification" to get started.</p>
+        <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+          <div className="text-gray-400 mb-3">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+          </div>
+          <p className="text-lg font-medium">No certifications added yet</p>
+          <p className="text-sm">Click "Add Certification" to get started</p>
         </div>
       ) : (
         <div className="space-y-6">
           {fields.map((field, index) => (
-            <div key={field.id} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+            <div key={field.id} className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Certification #{index + 1}
                 </h3>
                 <button
                   type="button"
                   onClick={() => onRemove(index)}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  className="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
                 >
                   Remove
                 </button>
@@ -49,7 +56,7 @@ const CertificationsSection = ({ control, errors, fields, onAdd, onRemove }) => 
                       rules: { required: 'Certification title is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.certifications?.[index]?.title ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="e.g., AWS Certified Solutions Architect"
@@ -73,7 +80,7 @@ const CertificationsSection = ({ control, errors, fields, onAdd, onRemove }) => 
                       rules: { required: 'Issuing organization is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.certifications?.[index]?.issuer ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="e.g., Amazon Web Services"
@@ -97,7 +104,7 @@ const CertificationsSection = ({ control, errors, fields, onAdd, onRemove }) => 
                       rules: { required: 'Date is required' }
                     }).field}
                     type="month"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
                       errors.certifications?.[index]?.date ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />

@@ -60,6 +60,82 @@ export const getCurrentUser = async () => {
   }
 };
 
+// Email verification
+export const verifyEmail = async (token) => {
+  try {
+    const response = await api.get(`/auth/verify-email?token=${token}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Password reset
+export const forgotPassword = async (email) => {
+  try {
+    const response = await api.post('/auth/forgot-password', { email });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await api.put(`/auth/reset-password/${token}`, { password });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Profile management
+export const updateProfile = async (profileData) => {
+  try {
+    const response = await api.put('/auth/profile', profileData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const updatePreferences = async (preferences) => {
+  try {
+    const response = await api.put('/auth/preferences', preferences);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const updatePassword = async (passwordData) => {
+  try {
+    const response = await api.put('/auth/update-password', passwordData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Account management
+export const deleteAccount = async (password) => {
+  try {
+    const response = await api.delete('/auth/account', { data: { password } });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const exportUserData = async () => {
+  try {
+    const response = await api.get('/auth/export-data');
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 // Resume API calls
 export const getResumes = async () => {
   try {

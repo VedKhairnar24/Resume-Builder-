@@ -3,15 +3,16 @@ import { useController } from 'react-hook-form';
 
 const AchievementsSection = ({ control, errors, fields, onAdd, onRemove }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900">Achievements</h2>
+        <h2 className="text-xl font-bold text-gray-900">Achievements</h2>
         <button
           type="button"
           onClick={onAdd}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-all duration-200 font-semibold shadow-sm flex items-center space-x-2"
         >
-          + Add Achievement
+          <span>+</span>
+          <span>Add Achievement</span>
         </button>
       </div>
 

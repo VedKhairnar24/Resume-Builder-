@@ -47,8 +47,8 @@ const PersonalInfoSection = ({ control, errors }) => {
   });
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">Personal Information</h2>
+    <div>
+      <h2 className="text-xl font-bold text-gray-900 mb-6">Personal Information</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Name */}
@@ -59,7 +59,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...nameField}
             type="text"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
               errors.personalInfo?.name ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Enter your full name"
@@ -77,7 +77,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...emailField}
             type="email"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
               errors.personalInfo?.email ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="your.email@example.com"
@@ -95,7 +95,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...phoneField}
             type="tel"
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
               errors.personalInfo?.phone ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="+1 (555) 123-4567"
@@ -113,7 +113,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...addressField}
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
             placeholder="City, State, Country"
           />
         </div>
@@ -126,7 +126,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...linkedinField}
             type="url"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
             placeholder="https://linkedin.com/in/yourprofile"
           />
         </div>
@@ -139,7 +139,7 @@ const PersonalInfoSection = ({ control, errors }) => {
           <input
             {...websiteField}
             type="url"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
             placeholder="https://yourwebsite.com"
           />
         </div>
