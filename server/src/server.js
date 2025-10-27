@@ -2,6 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import passport from './config/passport.js';
+import helmet from 'helmet';
+import cors from 'cors';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -31,7 +35,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/resume-builder')
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));
 
