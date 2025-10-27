@@ -7,7 +7,7 @@ export const TEMPLATES = [
   {
     id: "classic",
     name: "Classic Resume",
-    image: "https://cdn.pixabay.com/photo/2016/10/27/22/52/resume-1773728_1280.png",
+    image: "../img/Classic Resume.png",
     description: "Clean layout focused on content hierarchy and readability.",
     category: "Professional",
     color: "blue"
@@ -15,15 +15,15 @@ export const TEMPLATES = [
   {
     id: "modern",
     name: "Modern Resume",
-    image: "https://cdn.pixabay.com/photo/2017/08/30/12/22/business-2693946_1280.png",
+    image: "../img/Modern Resume.png",
     description: "Contemporary design with colors and modern typography.",
-    category: "Creative",
+    category: "Modern",
     color: "purple"
   },
   {
     id: "minimal",
     name: "Minimal Resume",
-    image: "https://cdn.pixabay.com/photo/2016/11/29/08/41/apple-1868496_1280.png",
+    image: "../img/Minimal Resume.png",
     description: "Clean and simple design with focus on typography.",
     category: "Minimalist",
     color: "gray"
@@ -31,7 +31,7 @@ export const TEMPLATES = [
   {
     id: "executive",
     name: "Executive Resume",
-    image: "https://cdn.pixabay.com/photo/2018/01/17/20/22/analytics-3088958_1280.png",
+    image: "../img/Executive Resume.png",
     description: "Professional format perfect for senior positions.",
     category: "Executive",
     color: "indigo"
@@ -39,7 +39,7 @@ export const TEMPLATES = [
   {
     id: "creative",
     name: "Creative Resume",
-    image: "https://cdn.pixabay.com/photo/2016/06/25/12/52/laptop-1478822_1280.png",
+    image: "../img/Creative Resume.jpg",
     description: "Eye-catching design for creative professionals.",
     category: "Creative",
     color: "pink"
@@ -47,7 +47,7 @@ export const TEMPLATES = [
   {
     id: "tech",
     name: "Tech Resume",
-    image: "https://cdn.pixabay.com/photo/2017/05/10/19/29/robot-2301646_1280.png",
+    image: "../img/Tech Resume.png",
     description: "Modern layout optimized for tech professionals.",
     category: "Technology",
     color: "green"

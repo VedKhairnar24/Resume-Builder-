@@ -5,16 +5,28 @@ const TemplateSection = () => {
 
   const templates = [
     {
-      img: "https://cdn.pixabay.com/photo/2016/10/27/22/52/resume-1773728_1280.png",
+      img: "../img/Classic Resume.png",
       title: "Classic Resume",
     },
     {
-      img: "https://cdn.pixabay.com/photo/2017/09/04/18/32/resume-template-2710590_1280.jpg",
+      img: "../img/Modern Resume.png",
       title: "Modern Resume",
     },
     {
-      img: "https://cdn.pixabay.com/photo/2016/10/31/20/36/cv-1784163_1280.png",
+      img: "../img/Minimal Resume.png",
       title: "Minimal Resume",
+    },
+    {
+      img: "../img/Executive Resume.png",
+      title: "executive Resume",
+    },
+    {
+      img: "../img/Creative Resume.jpg",
+      title: "creative Resume",
+    },
+    {
+      img: "../img/Tech Resume.png",
+      title: "Tech Resume",
     },
   ];
 
