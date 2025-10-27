@@ -2,6 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import passport from './config/passport.js';
+import helmet from 'helmet';
+import cors from 'cors';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
