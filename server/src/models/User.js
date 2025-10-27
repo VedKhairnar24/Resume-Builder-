@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         if (!v) return true; // Allow empty for OAuth users
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(v);
       },
@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
   },
   passwordResetToken: String,
   passwordResetExpire: Date,
-  
+
   // Profile information
   name: {
     first: {
@@ -57,7 +57,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  
+
   // Career profile
   careerProfile: {
     targetRole: {
@@ -89,7 +89,7 @@ const UserSchema = new mongoose.Schema({
       default: ''
     }
   },
-  
+
   // User preferences
   preferences: {
     emailNotifications: {
@@ -105,7 +105,7 @@ const UserSchema = new mongoose.Schema({
       default: false
     }
   },
-  
+
   // Subscription information
   subscription: {
     tier: {
@@ -126,7 +126,7 @@ const UserSchema = new mongoose.Schema({
       type: Date
     }
   },
-  
+
   // Security features
   twoFactorEnabled: {
     type: Boolean,
@@ -147,7 +147,7 @@ const UserSchema = new mongoose.Schema({
   lockUntil: {
     type: Date
   },
-  
+
   // Timestamps
   createdAt: {
     type: Date,
@@ -163,23 +163,23 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Virtual for full name
-UserSchema.virtual('fullName').get(function() {
+UserSchema.virtual('fullName').get(function () {
   return `${this.name.first} ${this.name.last}`;
 });
 
 // Virtual for account lock status
-UserSchema.virtual('isLocked').get(function() {
+UserSchema.virtual('isLocked').get(function () {
   return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
 // Update timestamps on save
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
 // Encrypt password using bcrypt
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -189,7 +189,7 @@ UserSchema.pre('save', async function(next) {
 });
 
 // Generate and hash password reset token
-UserSchema.methods.getResetPasswordToken = function() {
+UserSchema.methods.getResetPasswordToken = function () {
   // Generate token
   const resetToken = crypto.randomBytes(20).toString('hex');
 
@@ -206,7 +206,7 @@ UserSchema.methods.getResetPasswordToken = function() {
 };
 
 // Generate email verification token
-UserSchema.methods.getEmailVerificationToken = function() {
+UserSchema.methods.getEmailVerificationToken = function () {
   const verificationToken = crypto.randomBytes(20).toString('hex');
 
   this.emailVerificationToken = crypto
@@ -220,7 +220,7 @@ UserSchema.methods.getEmailVerificationToken = function() {
 };
 
 // Increment login attempts
-UserSchema.methods.incLoginAttempts = function() {
+UserSchema.methods.incLoginAttempts = function () {
   // If we have a previous lock that has expired, restart at 1
   if (this.lockUntil && this.lockUntil < Date.now()) {
     return this.updateOne({
@@ -228,38 +228,38 @@ UserSchema.methods.incLoginAttempts = function() {
       $set: { loginAttempts: 1 }
     });
   }
-  
+
   const updates = { $inc: { loginAttempts: 1 } };
-  
+
   // Lock account after 5 failed attempts for 2 hours
   if (this.loginAttempts + 1 >= 5 && !this.isLocked) {
     updates.$set = { lockUntil: Date.now() + 2 * 60 * 60 * 1000 }; // 2 hours
   }
-  
+
   return this.updateOne(updates);
 };
 
 // Reset login attempts
-UserSchema.methods.resetLoginAttempts = function() {
+UserSchema.methods.resetLoginAttempts = function () {
   return this.updateOne({
     $unset: { loginAttempts: 1, lockUntil: 1 }
   });
 };
 
 // Sign JWT and return
-UserSchema.methods.getSignedJwtToken = function() {
+UserSchema.methods.getSignedJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE || '7d'
   });
 };
 
 // Match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async function(enteredPassword) {
+UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
 // Update last login
-UserSchema.methods.updateLastLogin = function() {
+UserSchema.methods.updateLastLogin = function () {
   this.lastLogin = Date.now();
   return this.save();
 };

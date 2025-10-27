@@ -30,7 +30,7 @@ export const loginRateLimit = createRateLimit(
 
 export const registerRateLimit = createRateLimit(
   60 * 60 * 1000, // 1 hour
-  3, // 3 registrations per IP per hour
+  10, // 3 registrations per IP per hour
   'Too many registration attempts, please try again in an hour'
 );
 
@@ -54,14 +54,14 @@ export const generateCSRFToken = () => {
 export const validateCSRFToken = (req, res, next) => {
   const token = req.headers['x-csrf-token'];
   const sessionToken = req.session.csrfToken;
-  
+
   if (!token || !sessionToken || token !== sessionToken) {
     return res.status(403).json({
       success: false,
       error: 'Invalid CSRF token'
     });
   }
-  
+
   next();
 };
 
@@ -89,6 +89,8 @@ export const validateRegistration = [
       if (value !== req.body.password) {
         throw new Error('Password confirmation does not match password');
       }
+      console.log("sequrity js called");
+
       return true;
     })
 ];
@@ -145,8 +147,8 @@ export const handleValidationErrors = (req, res, next) => {
 export const auditLogger = (action) => {
   return (req, res, next) => {
     const originalSend = res.send;
-    
-    res.send = function(data) {
+
+    res.send = function (data) {
       // Log the action
       const logData = {
         timestamp: new Date().toISOString(),
@@ -157,13 +159,13 @@ export const auditLogger = (action) => {
         success: res.statusCode < 400,
         statusCode: res.statusCode
       };
-      
+
       console.log('AUDIT_LOG:', JSON.stringify(logData));
-      
+
       // Call original send
       originalSend.call(this, data);
     };
-    
+
     next();
   };
 };
@@ -172,20 +174,20 @@ export const auditLogger = (action) => {
 export const securityHeaders = (req, res, next) => {
   // Prevent clickjacking
   res.setHeader('X-Frame-Options', 'DENY');
-  
+
   // Prevent MIME type sniffing
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  
+
   // Enable XSS protection
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  
+
   // Strict Transport Security
   if (req.secure) {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
-  
+
   // Content Security Policy
-  res.setHeader('Content-Security-Policy', 
+  res.setHeader('Content-Security-Policy',
     "default-src 'self'; " +
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
     "style-src 'self' 'unsafe-inline'; " +
@@ -193,7 +195,7 @@ export const securityHeaders = (req, res, next) => {
     "font-src 'self' data:; " +
     "connect-src 'self'"
   );
-  
+
   next();
 };
 
@@ -203,7 +205,7 @@ export const sessionSecurity = (req, res, next) => {
   if (!req.session.csrfToken) {
     req.session.csrfToken = generateCSRFToken();
   }
-  
+
   // Regenerate session ID on login
   if (req.session.regenerateSession) {
     req.session.regenerate((err) => {
@@ -213,6 +215,6 @@ export const sessionSecurity = (req, res, next) => {
       delete req.session.regenerateSession;
     });
   }
-  
+
   next();
 };

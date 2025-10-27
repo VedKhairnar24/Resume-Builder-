@@ -13,6 +13,8 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    console.log("regi called" + req.body)
+
     // Check if user exists
     let user = await User.findOne({ email });
 
@@ -103,7 +105,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       // Increment login attempts
       await user.incLoginAttempts();
-      
+
       return res.status(401).json({
         success: false,
         error: 'Invalid credentials'
@@ -229,14 +231,14 @@ export const forgotPassword = async (req, res) => {
     // Send reset email
     try {
       await sendPasswordReset(user, resetToken);
-      
+
       res.status(200).json({
         success: true,
         message: 'Password reset email sent'
       });
     } catch (emailError) {
       console.error('Password reset email failed:', emailError);
-      
+
       user.passwordResetToken = undefined;
       user.passwordResetExpire = undefined;
       await user.save({ validateBeforeSave: false });
@@ -457,7 +459,7 @@ export const deleteAccount = async (req, res) => {
 export const exportUserData = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    
+
     // Get user's resumes
     const Resume = (await import('../models/Resume.js')).default;
     const resumes = await Resume.find({ user: req.user.id });
@@ -505,7 +507,7 @@ export const googleCallback = (req, res, next) => {
     if (err) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
     }
-    
+
     if (!user) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
     }
@@ -515,7 +517,7 @@ export const googleCallback = (req, res, next) => {
 
     // Generate JWT token
     const token = user.getSignedJwtToken();
-    
+
     // Redirect to frontend with token
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=google`);
   })(req, res, next);
@@ -534,7 +536,7 @@ export const linkedinCallback = (req, res, next) => {
     if (err) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
     }
-    
+
     if (!user) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
     }
@@ -543,7 +545,7 @@ export const linkedinCallback = (req, res, next) => {
     user.updateLastLogin();
 
     // Generate JWT token
-  const token = user.getSignedJwtToken();
+    const token = user.getSignedJwtToken();
 
     // Redirect to frontend with token
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=linkedin`);
@@ -565,7 +567,7 @@ export const githubCallback = (req, res, next) => {
     if (err) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
     }
-    
+
     if (!user) {
       return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
     }
@@ -575,7 +577,7 @@ export const githubCallback = (req, res, next) => {
 
     // Generate JWT token
     const token = user.getSignedJwtToken();
-    
+
     // Redirect to frontend with token
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}&provider=github`);
   })(req, res, next);
@@ -587,7 +589,7 @@ export const githubCallback = (req, res, next) => {
 export const setup2FA = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('+twoFactorSecret');
-    
+
     if (user.twoFactorEnabled) {
       return res.status(400).json({
         success: false,
@@ -597,13 +599,13 @@ export const setup2FA = async (req, res) => {
 
     // Generate 2FA secret
     const { secret, qrCodeUrl } = generate2FASecret(user);
-    
+
     // Generate QR code
     const qrCodeDataURL = await generateQRCode(qrCodeUrl);
-    
+
     // Generate backup codes
     const backupCodes = generateBackupCodes();
-    
+
     // Save secret and backup codes to user
     user.twoFactorSecret = secret;
     user.twoFactorBackupCodes = backupCodes;
@@ -633,7 +635,7 @@ export const verify2FASetup = async (req, res) => {
   try {
     const { token } = req.body;
     const user = await User.findById(req.user.id).select('+twoFactorSecret');
-    
+
     if (!user.twoFactorSecret) {
       return res.status(400).json({
         success: false,
@@ -643,7 +645,7 @@ export const verify2FASetup = async (req, res) => {
 
     // Verify token
     const isValid = verify2FAToken(user.twoFactorSecret, token);
-    
+
     if (!isValid) {
       return res.status(400).json({
         success: false,
@@ -675,7 +677,7 @@ export const disable2FA = async (req, res) => {
   try {
     const { password, token } = req.body;
     const user = await User.findById(req.user.id).select('+password +twoFactorSecret');
-    
+
     if (!user.twoFactorEnabled) {
       return res.status(400).json({
         success: false,
@@ -726,9 +728,9 @@ export const disable2FA = async (req, res) => {
 export const verify2FALogin = async (req, res) => {
   try {
     const { email, token, backupCode } = req.body;
-    
+
     const user = await User.findOne({ email }).select('+twoFactorSecret +twoFactorBackupCodes');
-    
+
     if (!user || !user.twoFactorEnabled) {
       return res.status(400).json({
         success: false,
@@ -775,9 +777,9 @@ export const verify2FALogin = async (req, res) => {
 export const get2FAStatus = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    
+
     res.status(200).json({
-    success: true,
+      success: true,
       data: {
         enabled: user.twoFactorEnabled,
         hasBackupCodes: user.twoFactorBackupCodes && user.twoFactorBackupCodes.length > 0
