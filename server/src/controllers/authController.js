@@ -5,6 +5,7 @@ import { sendEmailVerification, sendPasswordReset, sendWelcomeEmail } from '../s
 import { auditLogger } from '../middleware/security.js';
 import passport from '../config/passport.js';
 import { generate2FASecret, generateQRCode, verify2FAToken, generateBackupCodes, verifyBackupCode } from '../services/twoFactorService.js';
+import { sendTokenResponse } from '../utils/sendTokenResponse.js';
 
 // @desc    Register user
 // @route   POST /api/auth/register
@@ -119,6 +120,7 @@ export const login = async (req, res) => {
     // Update last login
     await user.updateLastLogin();
 
+    // Generate JWT token
     sendTokenResponse(user, 200, res);
   } catch (err) {
     console.error('Login error:', err);
