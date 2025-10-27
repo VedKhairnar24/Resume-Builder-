@@ -13,7 +13,6 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    console.log("regi called" + req.body)
 
     // Check if user exists
     let user = await User.findOne({ email });

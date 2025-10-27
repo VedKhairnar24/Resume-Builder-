@@ -62,7 +62,9 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      await signUp({ name, email, password });
+      await signUp(formData);
+      console.log(formData);
+
       setSuccess('Registration successful! Please check your email to verify your account.');
       setTimeout(() => {
         navigate('/login');

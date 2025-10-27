@@ -7,10 +7,9 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinkClasses = ({ isActive }) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-      isActive
-        ? 'text-teal-500 bg-gray-900'
-        : 'text-gray-300 hover:text-white hover:bg-gray-700'
+    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${isActive
+      ? 'text-teal-500 bg-gray-900'
+      : 'text-gray-300 hover:text-white hover:bg-gray-700'
     }`;
 
   return (
@@ -46,7 +45,7 @@ const Header = () => {
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <span className="text-gray-300 text-sm">
-                  Welcome, <span className="font-medium text-white">{user?.name}</span>
+                  Welcome, <span className="font-medium text-white">{user?.name.first}</span>
                 </span>
                 <button
                   onClick={signOut}
@@ -127,7 +126,7 @@ const Header = () => {
           {isAuthenticated ? (
             <div className="space-y-3">
               <div className="text-gray-400 text-sm">
-                Signed in as <span className="text-white font-medium">{user?.name}</span>
+                Signed in as <span className="text-white font-medium">{user?.name.first}</span>
               </div>
               <button
                 onClick={() => {
