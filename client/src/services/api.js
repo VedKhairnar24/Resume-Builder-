@@ -7,7 +7,33 @@ const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json'
+  },
+  retry: 3,
+  retryDelay: 1000
+});
+
+// Retry interceptor
+api.interceptors.response.use(undefined, async (err) => {
+  const { config, response: { status } } = err;
+  if (!config || !config.retry) return Promise.reject(err);
+  
+  if (status === 429) {
+    config.__retryCount = config.__retryCount || 0;
+    
+    if (config.__retryCount >= config.retry) {
+      return Promise.reject(err);
+    }
+    
+    config.__retryCount += 1;
+    
+    // Exponential backoff
+    const backoff = Math.min(config.retryDelay * Math.pow(2, config.__retryCount - 1), 10000);
+    
+    await new Promise(resolve => setTimeout(resolve, backoff));
+    return api(config);
   }
+  
+  return Promise.reject(err);
 });
 
 // Add token to requests if available

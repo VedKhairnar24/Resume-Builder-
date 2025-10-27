@@ -24,13 +24,13 @@ export const createRateLimit = (windowMs, max, message) => {
 // Specific rate limits
 export const loginRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutes
-  5, // 5 attempts per IP
+  10, // 10 attempts per IP
   'Too many login attempts, please try again in 15 minutes'
 );
 
 export const registerRateLimit = createRateLimit(
   60 * 60 * 1000, // 1 hour
-  10, // 3 registrations per IP per hour
+  5, // 5 registrations per IP per hour
   'Too many registration attempts, please try again in an hour'
 );
 
@@ -42,7 +42,7 @@ export const passwordResetRateLimit = createRateLimit(
 
 export const generalRateLimit = createRateLimit(
   15 * 60 * 1000, // 15 minutes
-  100, // 100 requests per IP per 15 minutes
+  150, // 150 requests per IP per 15 minutes
   'Too many requests, please try again later'
 );
 

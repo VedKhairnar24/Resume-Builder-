@@ -24,6 +24,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Import security middleware
+import { generalRateLimit } from './middleware/security.js';
+
+// Global rate limiter
+app.use(generalRateLimit);
+
 // Middleware
 app.use(helmet());
 app.use(cors({
