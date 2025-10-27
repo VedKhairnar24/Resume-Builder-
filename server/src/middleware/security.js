@@ -89,7 +89,6 @@ export const validateRegistration = [
       if (value !== req.body.password) {
         throw new Error('Password confirmation does not match password');
       }
-      console.log("sequrity js called");
 
       return true;
     })

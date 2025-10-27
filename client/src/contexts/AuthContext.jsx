@@ -29,20 +29,17 @@ export const AuthProvider = ({ children }) => {
           console.error('Error fetching user:', error);
           localStorage.removeItem('token');
         })
-        .finally(() => {
-          setLoading(false);
-        });
+        .finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
   }, []);
 
+  //  Normal Email/Password Register
   const signUp = async (userData) => {
     try {
       const response = await register(userData);
       setUser(response.data);
-      console.log(userData);
-
       setIsAuthenticated(true);
       return response;
     } catch (error) {
@@ -50,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //  Normal Email/Password Login
   const signIn = async (userData) => {
     try {
       const response = await login(userData);
@@ -61,10 +59,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //  Google OAuth Login
+  const signInWithGoogle = () => {
+    // Redirect to backend Google auth route
+    window.location.href = 'http://localhost:5000/api/auth/google';
+  };
+
+  //  Logout
   const signOut = () => {
     logout();
     setUser(null);
     setIsAuthenticated(false);
+    localStorage.removeItem('token');
   };
 
   const value = {
@@ -73,7 +79,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     signUp,
     signIn,
-    signOut
+    signInWithGoogle, // added here
+    signOut,
   };
 
   return (
