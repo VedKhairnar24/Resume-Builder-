@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import PersonalInfoSection from '../components/sections/PersonalInfoSection';
-import EducationSection from '../components/sections/EducationSection';
-import ExperienceSection from '../components/sections/ExperienceSection';
-import SkillsSection from '../components/sections/SkillsSection';
-import ProjectsSection from '../components/sections/ProjectsSection';
-import CertificationsSection from '../components/sections/CertificationsSection';
-import AchievementsSection from '../components/sections/AchievementsSection';
 import PreviewModal from '../components/PreviewModal';
 import TemplateSelector from '../components/TemplateSelector';
-import { saveResume, getResume } from '../services/api';
+import { saveResume } from '../services/api';
 import { TEMPLATES } from '../components/templates';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -20,25 +13,55 @@ const CreateResume = () => {
   const [saveStatus, setSaveStatus] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('one');
   const pdfRef = useRef();
+  
+  const defaultValues = {
+    personalInfo: {
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '+1 234 567 890',
+      address: 'New York, NY',
+      linkedin: 'linkedin.com/in/johndoe',
+      website: 'johndoe.com',
+      summary: 'Experienced professional with a track record of success'
+    },
+    education: [{
+      degree: 'Bachelor of Science',
+      institution: 'University Example',
+      field: 'Computer Science',
+      startDate: '2018',
+      endDate: '2022'
+    }],
+    experience: [{
+      company: 'Tech Corp',
+      position: 'Software Engineer',
+      startDate: '2022',
+      endDate: 'Present',
+      description: 'Led development of key features'
+    }],
+    skills: [
+      { skill: 'JavaScript' },
+      { skill: 'React' },
+      { skill: 'Node.js' }
+    ],
+    projects: [{
+      title: 'Project Example',
+      description: 'Built a full-stack application',
+      techUsed: 'React, Node.js, MongoDB'
+    }],
+    certifications: [{
+      title: 'Web Development',
+      issuer: 'Certification Authority',
+      date: '2023'
+    }],
+    achievements: [{
+      title: 'Employee of the Year',
+      description: 'Recognized for outstanding performance',
+      date: '2024'
+    }]
+  };
 
-  const { control, handleSubmit, formState: { errors }, watch, reset, setValue } = useForm({
-    defaultValues: {
-      personalInfo: {
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        linkedin: '',
-        website: '',
-        summary: ''
-      },
-      education: [],
-      experience: [],
-      skills: [],
-      projects: [],
-      certifications: [],
-      achievements: []
-    }
+  const { handleSubmit, watch, control, reset } = useForm({
+    defaultValues
   });
 
   const { fields: educationFields, append: appendEducation, remove: removeEducation } = useFieldArray({
@@ -239,8 +262,8 @@ const CreateResume = () => {
                 {isLoading ? '⏳ Generating...' : '📥 Download PDF'}
               </button>
               <button
-                type="submit"
-                form="resume-form"
+                type="button"
+                onClick={() => handleSubmit(onSubmit)()}
                 disabled={isLoading}
                 className="bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600 transition-all duration-200 font-semibold shadow-sm disabled:opacity-50"
               >
@@ -271,116 +294,36 @@ const CreateResume = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Side - Form */}
-          <div className="space-y-6">
-            <form id="resume-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Template Selection */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <TemplateSelector 
-                  selectedTemplate={selectedTemplate}
-                  onTemplateChange={handleTemplateChange}
-                  resumeData={watchedData}
-                />
-              </div>
+        {/* Template Selection */}
+        <div className="mb-8 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <TemplateSelector 
+            selectedTemplate={selectedTemplate}
+            onTemplateChange={handleTemplateChange}
+            resumeData={watchedData}
+          />
+        </div>
 
-              {/* Personal Information */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <PersonalInfoSection control={control} errors={errors} />
-              </div>
-
-              {/* Education */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <EducationSection 
-                  control={control} 
-                  errors={errors}
-                  fields={educationFields}
-                  onAdd={addEducation}
-                  onRemove={removeEducation}
-                />
-              </div>
-
-              {/* Work Experience */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <ExperienceSection 
-                  control={control} 
-                  errors={errors}
-                  fields={experienceFields}
-                  onAdd={addExperience}
-                  onRemove={removeExperience}
-                />
-              </div>
-
-              {/* Skills */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <SkillsSection 
-                  control={control} 
-                  errors={errors}
-                  fields={skillsFields}
-                  onAdd={addSkill}
-                  onRemove={removeSkill}
-                />
-              </div>
-
-              {/* Projects */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <ProjectsSection 
-                  control={control} 
-                  errors={errors}
-                  fields={projectsFields}
-                  onAdd={addProject}
-                  onRemove={removeProject}
-                />
-              </div>
-
-              {/* Certifications */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <CertificationsSection 
-                  control={control} 
-                  errors={errors}
-                  fields={certificationsFields}
-                  onAdd={addCertification}
-                  onRemove={removeCertification}
-                />
-              </div>
-
-              {/* Achievements */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <AchievementsSection 
-                  control={control} 
-                  errors={errors}
-                  fields={achievementsFields}
-                  onAdd={addAchievement}
-                  onRemove={removeAchievement}
-                />
-              </div>
-            </form>
+        {/* Live Preview */}
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900">Live Preview</h3>
+            <div className="text-sm text-gray-500">
+              Template: {TEMPLATES.find(t => t.id === selectedTemplate)?.name || 'Classic'}
+            </div>
           </div>
-
-          {/* Right Side - Live Preview */}
-          <div className="lg:sticky lg:top-24">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-900">Live Preview</h3>
-                <div className="text-sm text-gray-500">
-                  Template: {TEMPLATES.find(t => t.id === selectedTemplate)?.name || 'Classic'}
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
-                <div className="bg-white transform scale-75 origin-top-left" style={{width: '133.33%', height: '133.33%'}}>
-                  {(() => {
-                    const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === selectedTemplate)?.component;
-                    return SelectedTemplateComponent ? (
-                      <SelectedTemplateComponent data={watchedData} />
-                    ) : (
-                      <div className="p-8 text-center text-gray-500">
-                        <p>Select a template to see preview</p>
-                      </div>
-                    );
-                  })()}
-                </div>
-              </div>
+          
+          <div className="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+            <div className="bg-white transform scale-[0.9] origin-top" style={{ width: '111.11%', margin: '0 auto' }}>
+              {(() => {
+                const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === selectedTemplate)?.component;
+                return SelectedTemplateComponent ? (
+                  <SelectedTemplateComponent data={watchedData} />
+                ) : (
+                  <div className="p-8 text-center text-gray-500">
+                    <p>Select a template to see preview</p>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
