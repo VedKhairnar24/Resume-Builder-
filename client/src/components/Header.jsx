@@ -126,7 +126,9 @@ const Header = () => {
           {isAuthenticated ? (
             <div className="space-y-3">
               <div className="text-gray-400 text-sm">
-                Signed in as <span className="text-white font-medium">{user?.name.first}</span>
+                Signed in as <span className="text-white font-medium">{user?.name?.first}
+
+                </span>
               </div>
               <button
                 onClick={() => {
