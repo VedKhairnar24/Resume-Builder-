@@ -13,7 +13,7 @@ const Header = () => {
     }`;
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gray-800 sticky top-0 z-50 shadow-lg backdrop-blur-sm bg-gray-800/95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -95,7 +95,7 @@ const Header = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden absolute w-full bg-gray-800/95 backdrop-blur-sm shadow-lg`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <NavLink
             to="/"

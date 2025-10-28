@@ -215,7 +215,7 @@ const CreateResume = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-md backdrop-blur-sm bg-white/90">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div>
@@ -358,9 +358,9 @@ const CreateResume = () => {
           </div>
 
           {/* Right Side - Live Preview */}
-          <div className="lg:sticky lg:top-24">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
+          <div className="lg:sticky lg:top-24 h-[calc(100vh-8rem)]">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 h-full overflow-y-auto">
+              <div className="flex items-center justify-between mb-6 sticky top-0 bg-white z-10 py-2">
                 <h3 className="text-xl font-bold text-gray-900">Live Preview</h3>
                 <div className="text-sm text-gray-500">
                   Template: {TEMPLATES.find(t => t.id === selectedTemplate)?.name || 'Classic'}
