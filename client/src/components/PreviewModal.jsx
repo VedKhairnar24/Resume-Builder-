@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TEMPLATES } from './templates';
 
-const PreviewModal = ({ data, selectedTemplate, onClose }) => {
+const PreviewModal = ({ template, onClose }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -22,7 +22,7 @@ const PreviewModal = ({ data, selectedTemplate, onClose }) => {
           <h2 className="text-2xl font-bold text-gray-900">Resume Preview</h2>
           <div className="flex items-center space-x-4">
             <span className="text-sm text-gray-600">
-              Template: {TEMPLATES.find(t => t.id === selectedTemplate)?.name || 'Classic'}
+              Template: {template?.name || 'Classic'}
             </span>
             <button
               onClick={onClose}
@@ -34,22 +34,29 @@ const PreviewModal = ({ data, selectedTemplate, onClose }) => {
         </div>
 
         <div className="p-8 overflow-y-auto max-h-[calc(95vh-120px)]">
-          {(() => {
-            const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === selectedTemplate)?.component;
-            return SelectedTemplateComponent ? (
-              <SelectedTemplateComponent data={data} />
-            ) : (
-              <div className="text-center py-16">
-                <div className="text-gray-400 mb-4">
-                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709M15 6.291A7.962 7.962 0 0012 4c-2.34 0-4.29 1.009-5.824 2.709" />
-                  </svg>
-                </div>
-                <p className="text-gray-500 text-lg">No template selected</p>
-                <p className="text-gray-400 text-sm mt-2">Please select a template to preview your resume</p>
+          {template ? (
+            <div className="flex flex-col items-center justify-center">
+              <img
+                src={template.image}
+                alt={template.name}
+                className="rounded-xl shadow-lg max-h-[75vh] object-contain"
+              />
+              <p className="mt-4 text-gray-600 text-sm italic">
+                {template.description}
+              </p>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="text-gray-400 mb-4">
+                <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709M15 6.291A7.962 7.962 0 0012 4c-2.34 0-4.29-1.009-5.824 2.709" />
+                </svg>
               </div>
-            );
-          })()}
+              <p className="text-gray-500 text-lg">No template selected</p>
+              <p className="text-gray-400 text-sm mt-2">Please select a template to preview your resume</p>
+            </div>
+          )}
+
         </div>
 
         <div className="flex justify-end p-6 border-t border-gray-200 bg-gray-50">

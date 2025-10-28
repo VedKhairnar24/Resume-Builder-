@@ -141,7 +141,7 @@ const TemplatesPage = () => {
             Stunning <span className="text-teal-500">Templates</span>
           </h1>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-8">
-            Choose from our collection of professionally designed resume templates. 
+            Choose from our collection of professionally designed resume templates.
             Pick a template, preview it, and start building your resume instantly.
           </p>
         </header>
@@ -171,11 +171,10 @@ const TemplatesPage = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category
-                      ? 'bg-teal-500 text-white shadow-lg'
-                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === category
+                    ? 'bg-teal-500 text-white shadow-lg'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                    }`}
                 >
                   {category === 'all' ? 'All Templates' : category}
                 </button>
@@ -217,17 +216,16 @@ const TemplatesPage = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${
-                      template.color === 'blue' ? 'bg-blue-500' :
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${template.color === 'blue' ? 'bg-blue-500' :
                       template.color === 'purple' ? 'bg-purple-500' :
-                      template.color === 'gray' ? 'bg-gray-500' :
-                      template.color === 'indigo' ? 'bg-indigo-500' :
-                      template.color === 'pink' ? 'bg-pink-500' :
-                      'bg-green-500'
-                    }`}>
+                        template.color === 'gray' ? 'bg-gray-500' :
+                          template.color === 'indigo' ? 'bg-indigo-500' :
+                            template.color === 'pink' ? 'bg-pink-500' :
+                              'bg-green-500'
+                      }`}>
                       {template.category}
                     </span>
                   </div>
@@ -237,7 +235,7 @@ const TemplatesPage = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{template.name}</h3>
                   <p className="text-gray-600 text-sm mb-4">{template.description}</p>
-                  
+
                   <div className="flex items-center justify-between">
                     <button className="text-teal-500 font-semibold text-sm hover:text-teal-600 transition-colors">
                       Preview Template
