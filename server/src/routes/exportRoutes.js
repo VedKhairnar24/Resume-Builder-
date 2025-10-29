@@ -1,35 +1,43 @@
 import express from 'express';
 import auth from '../middleware/auth.js';
-import pdfService from '../services/pdfService.js';
 import docxService from '../services/docxService.js';
-// If you use Resume model, import it too:
 import Resume from '../models/Resume.js';
+import PDFService from '../services/pdfService.js';
 
 const router = express.Router();
+const pdfService = new PDFService(); // Create an instance
 
 // Export as PDF
 router.get('/resume/:id/pdf', auth, async (req, res) => {
   try {
-    if (!req.params.id) {
+    const resumeId = req.params.id;
+    if (!resumeId) {
       return res.status(400).json({ error: 'Resume ID is required' });
     }
 
-    console.log('Starting PDF generation request for resume:', req.params.id);
-    const pdfBuffer = await pdfService.generatePDF(req.params.id, req.user.id);
+    console.log('Starting PDF generation request for resume:', resumeId);
+
+    // Use instance method
+    const pdfBuffer = await pdfService.generatePDF(resumeId, req.user.id);
 
     if (!pdfBuffer || pdfBuffer.length === 0) {
       console.error('PDF Buffer is empty or null');
       return res.status(500).json({ error: 'PDF generation failed - empty buffer' });
     }
 
-    console.log('PDF generated successfully, size:', pdfBuffer.length);
+    // Fetch resume for filename
+    const resume = await Resume.findById(resumeId).populate('user');
 
-    const resume = await Resume.findById(req.params.id);
-    if (!resume) {
-      return res.status(404).json({ error: 'Resume not found' });
+    // Check if resume exists
+    if (!resume) throw new Error('Resume not found');
+
+    // Check if user exists and matches
+    if (!resume.user || resume.user._id.toString() !== req.user.id) {
+      throw new Error('Unauthorized access');
     }
 
-    const safeName = resume.personalInfo?.fullName?.replace(/[^a-z0-9]/gi, '_') || 'resume';
+
+    const safeName = resume.personalInfo?.name?.replace(/[^a-z0-9]/gi, '_') || 'resume';
     const fileName = `${safeName}_${Date.now()}.pdf`.toLowerCase();
 
     res.setHeader('Content-Type', 'application/pdf');
@@ -44,7 +52,5 @@ router.get('/resume/:id/pdf', auth, async (req, res) => {
     res.status(500).json({ error: 'Failed to generate PDF' });
   }
 });
-
-// Other routes remain same...
 
 export default router;

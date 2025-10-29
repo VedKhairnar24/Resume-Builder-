@@ -4,63 +4,54 @@ import axios from 'axios';
 const DownloadButtons = ({ resumeId }) => {
   const [loading, setLoading] = useState(false);
   const [format, setFormat] = useState(null);
-  
+
   const handleDownload = async (downloadFormat) => {
     setLoading(true);
     setFormat(downloadFormat);
+
     try {
-      // Check if resumeId exists
       if (!resumeId) {
         throw new Error('Resume ID is missing');
       }
 
       console.log(`Starting ${downloadFormat.toUpperCase()} download for resume:`, resumeId);
-      
+
+      // Absolute backend URL
       const response = await axios.get(
-        `/api/export/resume/${resumeId}/${downloadFormat}`,
-        { 
+        `http://localhost:5000/api/export/resume/${resumeId}/${downloadFormat}`,
+        {
           responseType: 'blob',
-          timeout: 30000, // 30 second timeout
+
           headers: {
-            'Accept': downloadFormat === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-          }
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Accept:
+              downloadFormat === 'pdf'
+                ? 'application/pdf'
+                : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          },
         }
       );
-      
-      // Verify response
+
       if (!response.data || response.data.size === 0) {
         throw new Error('Received empty file from server');
       }
 
-      // Check if the response is an error message
-      const reader = new FileReader();
-      reader.onload = async () => {
-        try {
-          const result = JSON.parse(reader.result);
-          if (result.error) {
-            throw new Error(result.error);
-          }
-        } catch (e) {
-          // If it's not JSON, it's the file we want
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', `resume_${Date.now()}.${downloadFormat}`);
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          window.URL.revokeObjectURL(url);
-          console.log(`${downloadFormat.toUpperCase()} downloaded successfully`);
-        }
-      };
-      reader.readAsText(response.data);
-      
+      // Directly create download link
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `resume_${Date.now()}.${downloadFormat}`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+
+      console.log(`${downloadFormat.toUpperCase()} downloaded successfully`);
     } catch (error) {
       console.error('Download error:', error);
-      
-      // Handle specific error cases
+
       let errorMessage = 'Failed to generate file. Please try again.';
-      
+
       if (error.response) {
         switch (error.response.status) {
           case 404:
@@ -80,8 +71,7 @@ const DownloadButtons = ({ resumeId }) => {
       } else if (error.code === 'ECONNABORTED') {
         errorMessage = 'Request timed out. Please try again.';
       }
-      
-      // Show error with toast if available, otherwise use alert
+
       if (window.toast) {
         window.toast.error(errorMessage);
       } else {
@@ -92,7 +82,7 @@ const DownloadButtons = ({ resumeId }) => {
       setFormat(null);
     }
   };
-  
+
   return (
     <div className="flex gap-3">
       <button
@@ -117,7 +107,7 @@ const DownloadButtons = ({ resumeId }) => {
           </>
         )}
       </button>
-      
+
       <button
         onClick={() => handleDownload('docx')}
         disabled={loading}

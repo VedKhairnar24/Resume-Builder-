@@ -92,21 +92,35 @@ const CreateResume = () => {
     }
   }, [reset]);
 
+  // Handle resume save
+  const [resumeId, setResumeId] = useState(null);
+
   const onSubmit = async (data) => {
     setIsLoading(true);
     setSaveStatus('');
-    
+
     try {
-      await saveResume(data);
-      setSaveStatus('success');
+      // Convert skills from [{ skill: "React.js" }] to ["React.js"]
+      const formattedData = {
+        ...data,
+        skills: data.skills.map(s => s.skill)
+      };
+
+      const response = await saveResume(formattedData);
+      const id = response?._id || response?.data?._id;
+
+      if (id) setResumeId(id);
+
+      setSaveStatus('success: Resume saved successfully');
       localStorage.removeItem('resume-draft'); // Clear draft after successful save
     } catch (error) {
       console.error('Error saving resume:', error);
-      setSaveStatus('error');
+      setSaveStatus(`error: ${JSON.stringify(error)}`);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const handlePreview = () => {
     setIsPreviewOpen(true);
@@ -189,7 +203,7 @@ const CreateResume = () => {
               >
                 📄 Preview Resume
               </button>
-              <DownloadButtons userData={watchedData} />
+              <DownloadButtons resumeId={resumeId} />
               <button
                 type="submit"
                 form="resume-form"
@@ -206,11 +220,10 @@ const CreateResume = () => {
       {/* Status Message */}
       {saveStatus && (
         <div className="max-w-7xl mx-auto px-6 py-3">
-          <div className={`p-4 rounded-xl ${
-            saveStatus.includes('success') || saveStatus.includes('downloaded')
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}>
+          <div className={`p-4 rounded-xl ${saveStatus.includes('success') || saveStatus.includes('downloaded')
+            ? 'bg-green-50 text-green-800 border border-green-200'
+            : 'bg-red-50 text-red-800 border border-red-200'
+            }`}>
             <div className="flex items-center">
               <span className="mr-2">
                 {saveStatus.includes('success') || saveStatus.includes('downloaded') ? '✅' : '❌'}
@@ -229,7 +242,7 @@ const CreateResume = () => {
             <form id="resume-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Template Selection */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <TemplateSelector 
+                <TemplateSelector
                   selectedTemplate={selectedTemplate}
                   onTemplateChange={handleTemplateChange}
                   resumeData={watchedData}
@@ -243,8 +256,8 @@ const CreateResume = () => {
 
               {/* Education */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <EducationSection 
-                  control={control} 
+                <EducationSection
+                  control={control}
                   errors={errors}
                   fields={educationFields}
                   onAdd={addEducation}
@@ -254,8 +267,8 @@ const CreateResume = () => {
 
               {/* Work Experience */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <ExperienceSection 
-                  control={control} 
+                <ExperienceSection
+                  control={control}
                   errors={errors}
                   fields={experienceFields}
                   onAdd={addExperience}
@@ -265,8 +278,8 @@ const CreateResume = () => {
 
               {/* Skills */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <SkillsSection 
-                  control={control} 
+                <SkillsSection
+                  control={control}
                   errors={errors}
                   fields={skillsFields}
                   onAdd={addSkill}
@@ -276,8 +289,8 @@ const CreateResume = () => {
 
               {/* Projects */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <ProjectsSection 
-                  control={control} 
+                <ProjectsSection
+                  control={control}
                   errors={errors}
                   fields={projectsFields}
                   onAdd={addProject}
@@ -287,8 +300,8 @@ const CreateResume = () => {
 
               {/* Certifications */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <CertificationsSection 
-                  control={control} 
+                <CertificationsSection
+                  control={control}
                   errors={errors}
                   fields={certificationsFields}
                   onAdd={addCertification}
@@ -298,8 +311,8 @@ const CreateResume = () => {
 
               {/* Achievements */}
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <AchievementsSection 
-                  control={control} 
+                <AchievementsSection
+                  control={control}
                   errors={errors}
                   fields={achievementsFields}
                   onAdd={addAchievement}
@@ -318,9 +331,9 @@ const CreateResume = () => {
                   Template: {TEMPLATES.find(t => t.id === selectedTemplate)?.name || 'Classic'}
                 </div>
               </div>
-              
+
               <div className="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
-                <div className="bg-white transform scale-75 origin-top-left" style={{width: '133.33%', height: '133.33%'}}>
+                <div className="bg-white transform scale-75 origin-top-left" style={{ width: '133.33%', height: '133.33%' }}>
                   {(() => {
                     const SelectedTemplateComponent = TEMPLATES.find(tpl => tpl.id === selectedTemplate)?.component;
                     return SelectedTemplateComponent ? (
@@ -340,7 +353,7 @@ const CreateResume = () => {
 
       {/* Preview Modal */}
       {isPreviewOpen && (
-        <PreviewModal 
+        <PreviewModal
           data={watchedData}
           selectedTemplate={selectedTemplate}
           onClose={() => setIsPreviewOpen(false)}

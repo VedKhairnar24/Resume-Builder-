@@ -4,11 +4,28 @@ import fs from 'fs/promises';
 import Resume from '../models/Resume.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fsSync from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 class PDFService {
+  // Utility to detect a browser executable (Chrome or Edge)
+  async getBrowserExecutable() {
+    const BROWSER_PATHS = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
+    ];
+
+    const foundPath = BROWSER_PATHS.find(p => fsSync.existsSync(p));
+    if (!foundPath) {
+      throw new Error('No supported browser found! Install Chrome or Edge.');
+    }
+    return foundPath;
+  }
+
   async generatePDFFromData(resumeData) {
     let browser = null;
     try {
@@ -33,8 +50,11 @@ class PDFService {
 
       const html = template({ resume: safeData });
 
+      const executablePath = await this.getBrowserExecutable();
+
       browser = await puppeteer.launch({
         headless: 'new',
+        executablePath,
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
@@ -66,9 +86,12 @@ class PDFService {
   async generatePDF(resumeId, userId) {
     let browser = null;
     try {
-      const resume = await Resume.findById(resumeId).populate('userId');
+      const resume = await Resume.findById(resumeId).populate('user');
+
       if (!resume) throw new Error('Resume not found');
-      if (resume.userId._id.toString() !== userId) throw new Error('Unauthorized access');
+      if (!resume.user || resume.user._id.toString() !== userId) {
+        throw new Error('Unauthorized access');
+      }
 
       const templateName = resume.template || 'default';
       const templatePath = path.join(__dirname, `../templates/pdf/${templateName}.html`);
@@ -91,10 +114,13 @@ class PDFService {
         skills: resumeData.skills || []
       };
 
-      const html = template({ resume: safeData, user: resume.userId });
+      const html = template({ resume: safeData, user: resume.user });
+
+      const executablePath = await this.getBrowserExecutable();
 
       browser = await puppeteer.launch({
         headless: 'new',
+        executablePath,
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
