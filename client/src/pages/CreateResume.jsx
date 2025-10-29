@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import PersonalInfoSection from '../components/sections/PersonalInfoSection';
 import EducationSection from '../components/sections/EducationSection';
+import DownloadButtons from '../components/DownloadButtons';
 import ExperienceSection from '../components/sections/ExperienceSection';
 import SkillsSection from '../components/sections/SkillsSection';
 import ProjectsSection from '../components/sections/ProjectsSection';
@@ -11,8 +12,6 @@ import PreviewModal from '../components/PreviewModal';
 import TemplateSelector from '../components/TemplateSelector';
 import { saveResume, getResume } from '../services/api';
 import { TEMPLATES } from '../components/templates';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const CreateResume = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -167,49 +166,9 @@ const CreateResume = () => {
     setSelectedTemplate(templateId);
   };
 
-  const downloadPDF = async () => {
-    setIsLoading(true);
-    try {
-      const element = pdfRef.current;
-      if (!element) {
-        console.error('PDF element not found');
-        return;
-      }
-
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
-      });
-      
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      const fileName = `${watchedData.personalInfo?.name || 'resume'}_resume.pdf`;
-      pdf.save(fileName);
-      setSaveStatus('PDF downloaded successfully!');
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      setSaveStatus('Error generating PDF. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handleError = (message) => {
+    setSaveStatus(message);
+    setTimeout(() => setSaveStatus(''), 5000);
   };
 
   return (
@@ -230,14 +189,7 @@ const CreateResume = () => {
               >
                 📄 Preview Resume
               </button>
-              <button
-                type="button"
-                onClick={downloadPDF}
-                disabled={isLoading}
-                className="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 transition-all duration-200 font-semibold shadow-sm disabled:opacity-50"
-              >
-                {isLoading ? '⏳ Generating...' : '📥 Download PDF'}
-              </button>
+              <DownloadButtons userData={watchedData} />
               <button
                 type="submit"
                 form="resume-form"
