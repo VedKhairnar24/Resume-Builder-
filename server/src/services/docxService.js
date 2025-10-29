@@ -1,5 +1,5 @@
-const { Document, Packer, Paragraph, TextRun, HeadingLevel } = require('docx');
-const Resume = require('../models/Resume');
+import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
+import Resume from '../models/Resume.js';
 
 class DOCXService {
   async generateDOCX(resumeId, userId) {
@@ -108,5 +108,4 @@ class DOCXService {
     }
   }
 }
-
-module.exports = new DOCXService();
+export default DOCXService;
