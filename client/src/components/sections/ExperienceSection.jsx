@@ -56,9 +56,8 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Job title is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
-                      errors.experience?.[index]?.position ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${errors.experience?.[index]?.position ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     placeholder="e.g., Software Engineer"
                   />
                   {errors.experience?.[index]?.position && (
@@ -80,9 +79,8 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Company is required' }
                     }).field}
                     type="text"
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
-                      errors.experience?.[index]?.company ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${errors.experience?.[index]?.company ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     placeholder="e.g., Google Inc."
                   />
                   {errors.experience?.[index]?.company && (
@@ -104,9 +102,8 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Start date is required' }
                     }).field}
                     type="month"
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
-                      errors.experience?.[index]?.startDate ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${errors.experience?.[index]?.startDate ? 'border-red-500' : 'border-gray-300'
+                      }`}
                   />
                   {errors.experience?.[index]?.startDate && (
                     <p className="mt-1 text-sm text-red-600">
@@ -145,9 +142,8 @@ const ExperienceSection = ({ control, errors, fields, onAdd, onRemove }) => {
                       rules: { required: 'Job description is required' }
                     }).field}
                     rows={4}
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${
-                      errors.experience?.[index]?.description ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors ${errors.experience?.[index]?.description ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     placeholder="Describe your key responsibilities, achievements, and impact in this role..."
                   />
                   {errors.experience?.[index]?.description && (
