@@ -48,10 +48,12 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/resume-bu
 // Import route files
 import resumeRoutes from './routes/resumeRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import exportRoutes from './routes/exportRoutes.js';
 
 // Mount Routes
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/export', exportRoutes);
 
 // Base route
 app.get('/', (req, res) => {

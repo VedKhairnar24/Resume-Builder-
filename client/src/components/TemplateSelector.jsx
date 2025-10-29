@@ -25,6 +25,27 @@ const TEMPLATES = [
     component: ResumeTemplateThree,
     preview: 'bg-white border border-gray-400'
   },
+  {
+    id: 'four',
+    name: 'Creative',
+    description: 'Bold design with creative layout and unique sections',
+    component: ResumeTemplateOne,
+    preview: 'bg-gradient-to-r from-pink-500 to-orange-500'
+  },
+  {
+    id: 'five',
+    name: 'Professional',
+    description: 'Executive style with sophisticated formatting',
+    component: ResumeTemplateTwo,
+    preview: 'bg-gradient-to-r from-gray-800 to-gray-900'
+  },
+  {
+    id: 'six',
+    name: 'Dynamic',
+    description: 'Modern layout with dynamic color accents',
+    component: ResumeTemplateThree,
+    preview: 'bg-gradient-to-r from-green-400 to-blue-500'
+  }
 ];
 
 const TemplateSelector = ({ selectedTemplate, onTemplateChange, resumeData }) => {

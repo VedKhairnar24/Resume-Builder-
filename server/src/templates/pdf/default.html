@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{resume.personalInfo.fullName}} - Resume</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+        }
+
+        .job-title, .degree {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .company-info, .education-info {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .bullet-points {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .bullet-points li {
+            margin-bottom: 5px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            background: #f3f4f6;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">{{resume.personalInfo.fullName}}</div>
+        <div class="contact-info">
+            {{resume.personalInfo.email}} | {{resume.personalInfo.phone}} | {{resume.personalInfo.location}}
+        </div>
+    </div>
+
+    {{#if resume.summary}}
+    <div class="section">
+        <div class="section-title">PROFESSIONAL SUMMARY</div>
+        <div>{{resume.summary}}</div>
+    </div>
+    {{/if}}
+
+    {{#if resume.experience}}
+    <div class="section">
+        <div class="section-title">WORK EXPERIENCE</div>
+        {{#each resume.experience}}
+        <div class="experience-item">
+            <div class="job-title">{{this.jobTitle}}</div>
+            <div class="company-info">{{this.company}} | {{this.location}}</div>
+            <div class="date">{{this.startDate}} - {{#if this.current}}Present{{else}}{{this.endDate}}{{/if}}</div>
+            {{#if this.bullets}}
+            <ul class="bullet-points">
+                {{#each this.bullets}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if resume.education}}
+    <div class="section">
+        <div class="section-title">EDUCATION</div>
+        {{#each resume.education}}
+        <div class="education-item">
+            <div class="degree">{{this.degree}}</div>
+            <div class="education-info">{{this.institution}}</div>
+            <div>Graduated: {{this.graduationDate}}</div>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if resume.skills}}
+    <div class="section">
+        <div class="section-title">SKILLS</div>
+        <div class="skills">
+            {{#each resume.skills}}
+            <span class="skill-item">{{this}}</span>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
+</body>
+</html>
