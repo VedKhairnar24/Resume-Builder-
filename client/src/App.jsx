@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import CareerPathwayExplorer from './pages/CareerPathwayExplorer';
 import LinkedInOptimizerPage from './pages/LinkedInOptimizerPage';
+import EmailTemplateLibrary from './pages/EmailTemplateLibrary';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="/templates" element={<TemplatesPage />} />
               <Route path="/career-explorer" element={<CareerPathwayExplorer />} />
               <Route path="/linkedin-optimizer" element={<LinkedInOptimizerPage />} />
+              <Route path="/email-templates" element={<EmailTemplateLibrary />} />
               {/* <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />

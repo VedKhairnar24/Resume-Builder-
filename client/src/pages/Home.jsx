@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ResumeSampleCard from '../components/ResumeSampleCard';
 import TemplateCarousel from '../components/TemplateCarousel';
 import '../styles/Home.css';
@@ -6,7 +7,7 @@ import '../styles/Home.css';
 const Home = () => {
   return (
     <div className="min-h-screen bg-white">
-      <header className="py-32 text-center bg-gradient-to-b from-gray-50 via-white to-teal-50 relative overflow-hidden">
+      <header className="pt-24 pb-32 text-center bg-gradient-to-b from-gray-50 via-white to-teal-50 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-teal-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>

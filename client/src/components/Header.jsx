@@ -39,6 +39,9 @@ const Header = () => {
             <NavLink to="/linkedin-optimizer" className={navLinkClasses}>
               LinkedIn Optimizer
             </NavLink>
+            <NavLink to="/email-templates" className={navLinkClasses}>
+              Email Templates
+            </NavLink>
             {isAuthenticated && (
               <NavLink to="/create-resume" className={navLinkClasses}>
                 Create Resume
@@ -131,6 +134,13 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             LinkedIn Optimizer
+          </NavLink>
+          <NavLink
+            to="/email-templates"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Email Templates
           </NavLink>
           {isAuthenticated && (
             <NavLink
