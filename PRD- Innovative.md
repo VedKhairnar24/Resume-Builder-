@@ -149,6 +149,7 @@ Based on 100% platform adoption across analyzed competitors:[^9][^10][^11][^12][
 
 - **Career Path Mapper**: Visualizes current position → target role with required steps
 - **Skills Gap Analyzer**: Identifies missing skills for target roles with learning recommendations
+- **Career Pathway Explorer**: Interactive tool for users to explore entry-level roles, visualize career progressions, and see real-world career journeys.
 - **Industry Trend Integration**: Shows in-demand skills and emerging requirements for target roles
 - **Salary Insight Tool**: Provides realistic compensation ranges with negotiation talking points
 - **Career Timeline Planner**: Creates actionable 6-12 month roadmap to target role
@@ -1404,4 +1405,3 @@ This PRD outlines a **differentiated and user-centric resume builder**. By prior
 ***
 
 **If you need an editable version or have further constraints (like for grant proposals, academic use, partnerships, or open-source), request a tailored section for those needs!**
-

@@ -33,6 +33,12 @@ const Header = () => {
             <NavLink to="/templates" className={navLinkClasses}>
               Templates
             </NavLink>
+            <NavLink to="/career-explorer" className={navLinkClasses}>
+              Career Explorer
+            </NavLink>
+            <NavLink to="/linkedin-optimizer" className={navLinkClasses}>
+              LinkedIn Optimizer
+            </NavLink>
             {isAuthenticated && (
               <NavLink to="/create-resume" className={navLinkClasses}>
                 Create Resume
@@ -111,6 +117,20 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Templates
+          </NavLink>
+          <NavLink
+            to="/career-explorer"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Career Explorer
+          </NavLink>
+          <NavLink
+            to="/linkedin-optimizer"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            LinkedIn Optimizer
           </NavLink>
           {isAuthenticated && (
             <NavLink

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import { updateProfile, updatePreferences, updatePassword, deleteAccount, exportUserData } from '../services/api';
 
 const ProfileDashboard = () => {

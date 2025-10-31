@@ -8,6 +8,8 @@ import CreateResume from './pages/CreateResume';
 import TemplatesPage from './pages/Templates';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CareerPathwayExplorer from './pages/CareerPathwayExplorer';
+import LinkedInOptimizerPage from './pages/LinkedInOptimizerPage';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
                 </ProtectedRoute>
               } />
               <Route path="/templates" element={<TemplatesPage />} />
+              <Route path="/career-explorer" element={<CareerPathwayExplorer />} />
+              <Route path="/linkedin-optimizer" element={<LinkedInOptimizerPage />} />
               {/* <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />
