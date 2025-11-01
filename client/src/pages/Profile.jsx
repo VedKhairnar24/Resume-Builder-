@@ -164,9 +164,9 @@ const ProfileDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
             <div className="flex items-start justify-between">
@@ -224,7 +224,7 @@ const ProfileDashboard = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600'
+                      ? 'border-cyan-500 text-cyan-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >
@@ -258,7 +258,7 @@ const ProfileDashboard = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
                     <input
                       type="text"
-                      value={profileData.name.first}
+                      value={profileData.name?.first || ''}
                       onChange={(e) => setProfileData({...profileData, name: {...profileData.name, first: e.target.value}})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
@@ -269,7 +269,7 @@ const ProfileDashboard = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
                     <input
                       type="text"
-                      value={profileData.name.last}
+                      value={profileData.name?.last || ''}
                       onChange={(e) => setProfileData({...profileData, name: {...profileData.name, last: e.target.value}})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
@@ -281,7 +281,7 @@ const ProfileDashboard = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Target Role</label>
                   <input
                     type="text"
-                    value={profileData.targetRole}
+                    value={profileData.targetRole || ''}
                     onChange={(e) => setProfileData({...profileData, targetRole: e.target.value})}
                     placeholder="e.g., Software Engineer, Marketing Manager"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -292,7 +292,7 @@ const ProfileDashboard = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Industry</label>
                     <select
-                      value={profileData.industry}
+                      value={profileData.industry || 'Other'}
                       onChange={(e) => setProfileData({...profileData, industry: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -305,7 +305,7 @@ const ProfileDashboard = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Career Stage</label>
                     <select
-                      value={profileData.careerStage}
+                      value={profileData.careerStage || 'entry'}
                       onChange={(e) => setProfileData({...profileData, careerStage: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -321,7 +321,7 @@ const ProfileDashboard = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
                     <input
                       type="text"
-                      value={profileData.location.city}
+                      value={profileData.location?.city || ''}
                       onChange={(e) => setProfileData({...profileData, location: {...profileData.location, city: e.target.value}})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -331,7 +331,7 @@ const ProfileDashboard = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Country</label>
                     <input
                       type="text"
-                      value={profileData.location.country}
+                      value={profileData.location?.country || ''}
                       onChange={(e) => setProfileData({...profileData, location: {...profileData.location, country: e.target.value}})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -342,7 +342,7 @@ const ProfileDashboard = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                   <input
                     type="tel"
-                    value={profileData.phone}
+                    value={profileData.phone || ''}
                     onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -352,7 +352,7 @@ const ProfileDashboard = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture URL</label>
                   <input
                     type="url"
-                    value={profileData.profilePicture}
+                    value={profileData.profilePicture || ''}
                     onChange={(e) => setProfileData({...profileData, profilePicture: e.target.value})}
                     placeholder="https://example.com/your-photo.jpg"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -362,7 +362,7 @@ const ProfileDashboard = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50"
+                  className="bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors duration-200 disabled:opacity-50"
                 >
                   {isLoading ? 'Updating...' : 'Update Profile'}
                 </button>
@@ -386,8 +386,7 @@ const ProfileDashboard = () => {
                         checked={preferences.emailNotifications}
                         onChange={(e) => setPreferences({...preferences, emailNotifications: e.target.checked})}
                         className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      /><div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
                     </label>
                   </div>
 
@@ -402,8 +401,7 @@ const ProfileDashboard = () => {
                         checked={preferences.marketingEmails}
                         onChange={(e) => setPreferences({...preferences, marketingEmails: e.target.checked})}
                         className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      /><div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
                     </label>
                   </div>
 
@@ -418,8 +416,7 @@ const ProfileDashboard = () => {
                         checked={preferences.dataUsageConsent}
                         onChange={(e) => setPreferences({...preferences, dataUsageConsent: e.target.checked})}
                         className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      /><div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
                     </label>
                   </div>
                 </div>
@@ -427,7 +424,7 @@ const ProfileDashboard = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50"
+                  className="bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors duration-200 disabled:opacity-50"
                 >
                   {isLoading ? 'Updating...' : 'Update Preferences'}
                 </button>
@@ -480,7 +477,7 @@ const ProfileDashboard = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50"
+                    className="mt-4 bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors duration-200 disabled:opacity-50"
                   >
                     {isLoading ? 'Updating...' : 'Update Password'}
                   </button>

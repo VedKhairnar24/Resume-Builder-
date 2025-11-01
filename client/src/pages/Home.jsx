@@ -4,7 +4,7 @@ import { Compass, Linkedin, Mail, FileText, ArrowRight, Library } from 'lucide-r
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* 1. Hero Section */}
       <header className="py-24 md:py-32 text-center bg-white relative overflow-hidden">
         {/* Decorative elements */}

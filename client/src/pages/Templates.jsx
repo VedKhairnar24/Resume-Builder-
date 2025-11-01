@@ -133,12 +133,12 @@ const TemplatesPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white py-16">
+    <main className="min-h-screen py-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <header className="mb-12 text-center">
+        <header className="mb-12 text-center bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
-            Stunning <span className="text-teal-500">Templates</span>
+            Stunning <span className="text-cyan-500">Templates</span>
           </h1>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-8">
             Choose from our collection of professionally designed resume templates.
@@ -147,7 +147,7 @@ const TemplatesPage = () => {
         </header>
 
         {/* Search and Filter Section */}
-        <div className="mb-12">
+        <div className="mb-12 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-8">
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
@@ -161,7 +161,7 @@ const TemplatesPage = () => {
                 placeholder="Search templates..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
               />
             </div>
 
@@ -172,7 +172,7 @@ const TemplatesPage = () => {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === category
-                    ? 'bg-teal-500 text-white shadow-lg'
+                    ? 'bg-cyan-500 text-white shadow-lg'
                     : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
                     }`}
                 >
@@ -208,7 +208,7 @@ const TemplatesPage = () => {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-white rounded-full p-3 shadow-lg">
+                      <div className="bg-white rounded-full p-3 shadow-lg text-cyan-500">
                         <svg className="w-6 h-6 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -237,12 +237,12 @@ const TemplatesPage = () => {
                   <p className="text-gray-600 text-sm mb-4">{template.description}</p>
 
                   <div className="flex items-center justify-between">
-                    <button className="text-teal-500 font-semibold text-sm hover:text-teal-600 transition-colors">
+                    <button className="text-cyan-500 font-semibold text-sm hover:text-cyan-600 transition-colors">
                       Preview Template
                     </button>
                     <Link
                       to={`/create-resume?template=${template.id}`}
-                      className="bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-teal-600 transition-colors"
+                      className="bg-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cyan-600 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Use Template
@@ -268,7 +268,7 @@ const TemplatesPage = () => {
                 setQuery("");
                 setSelectedCategory("all");
               }}
-              className="bg-teal-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors"
+              className="bg-cyan-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-cyan-600 transition-colors"
             >
               Clear Filters
             </button>
@@ -276,14 +276,14 @@ const TemplatesPage = () => {
         )}
 
         {/* Call to Action */}
-        <div className="text-center bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl p-8 text-white">
+        <div className="text-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-8 text-white shadow-2xl">
           <h2 className="text-2xl font-bold mb-4">Ready to Create Your Resume?</h2>
           <p className="text-lg mb-6 opacity-90">
             Choose any template and start building your professional resume in minutes.
           </p>
           <Link
             to="/create-resume"
-            className="bg-white text-teal-500 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors inline-block"
+            className="bg-white text-cyan-600 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors inline-block"
           >
             Start Building Now
           </Link>

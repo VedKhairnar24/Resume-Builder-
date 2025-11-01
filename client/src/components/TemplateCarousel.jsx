@@ -31,7 +31,7 @@ const TemplateSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white text-center relative overflow-hidden">
+    <section className="py-24 text-center relative overflow-hidden">
       {/* Decorative background blur */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-teal-100 rounded-full blur-3xl opacity-20 -z-10"></div>
 

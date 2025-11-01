@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,6 +17,21 @@ import ProfileDashboard from './pages/Profile';
 
 
 function App() {
+  useEffect(() => {
+    // Apply sticky background styles to the body
+    // Using a CSS gradient as a placeholder for the generated image
+    document.body.style.backgroundImage = "radial-gradient(circle at 30% 50%, #7EF0C8, #3CB7A5, #2A94F4, #032B5C)";
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+
+    // Cleanup function to remove styles when component unmounts
+    return () => {
+      document.body.style.backgroundImage = '';
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
