@@ -4,7 +4,7 @@ const ResumeTemplateOne = ({ data }) => {
   const { personalInfo, education, experience, skills, projects, certifications, achievements } = data;
 
   return (
-    <div className="bg-white p-8 max-w-4xl mx-auto" style={{ fontFamily: 'Arial, sans-serif' }}>
+    <div className="bg-white p-8 max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center mb-8 border-b-2 border-blue-600 pb-4">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">

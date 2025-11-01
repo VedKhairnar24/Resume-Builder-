@@ -4,7 +4,7 @@ const ResumeTemplateFour = ({ data }) => {
   const { personalInfo, education, experience, skills, projects, certifications, achievements } = data;
 
   return (
-    <div className="bg-white p-8 max-w-4xl mx-auto" style={{ fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif' }}>
+    <div className="bg-white p-8 max-w-4xl mx-auto">
       {/* Left sidebar layout */}
       <div className="flex gap-8">
         {/* Sidebar */}

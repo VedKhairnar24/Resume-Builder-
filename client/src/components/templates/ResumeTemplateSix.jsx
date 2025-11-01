@@ -4,7 +4,7 @@ const ResumeTemplateSix = ({ data }) => {
   const { personalInfo, education, experience, skills, projects, certifications, achievements } = data;
 
   return (
-    <div className="bg-white p-8 max-w-4xl mx-auto" style={{ fontFamily: '"Roboto", sans-serif' }}>
+    <div className="bg-white p-8 max-w-4xl mx-auto">
       {/* Split header with name and contact */}
       <div className="flex justify-between items-center mb-8">
         <div>
