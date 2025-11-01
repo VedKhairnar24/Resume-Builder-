@@ -12,6 +12,8 @@ import CareerPathwayExplorer from './pages/CareerPathwayExplorer';
 import LinkedInOptimizerPage from './pages/LinkedInOptimizerPage';
 import EmailTemplateLibrary from './pages/EmailTemplateLibrary';
 import ResourceLibrary from '../../ResourceLibrary';
+import ProfileDashboard from './pages/Profile';
+
 
 function App() {
   return (
@@ -34,6 +36,11 @@ function App() {
               <Route path="/linkedin-optimizer" element={<LinkedInOptimizerPage />} />
               <Route path="/email-templates" element={<EmailTemplateLibrary />} />
               <Route path="/resource-library" element={<ResourceLibrary />} />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <ProfileDashboard />
+                </ProtectedRoute>
+              } />
               {/* <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />

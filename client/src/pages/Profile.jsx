@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { updateProfile, updatePreferences, updatePassword, deleteAccount, exportUserData } from '../services/api';
 
 const ProfileDashboard = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -61,6 +62,11 @@ const ProfileDashboard = () => {
   const showMessage = (type, text) => {
     setMessage({ type, text });
     setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    navigate('/'); // Redirect to home page after sign out
   };
 
   const handleProfileUpdate = async (e) => {
@@ -163,7 +169,7 @@ const ProfileDashboard = () => {
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-start justify-between">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
                 {user?.profilePicture ? (
                   <img src={user.profilePicture} alt="Profile" className="w-16 h-16 rounded-full object-cover" />
@@ -175,24 +181,32 @@ const ProfileDashboard = () => {
                   </div>
                 )}
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">
-                  {user?.name?.first} {user?.name?.last}
-                </h1>
-                <p className="text-blue-100">{user?.email}</p>
-                <div className="flex items-center mt-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    user?.emailVerified 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {user?.emailVerified ? '✓ Verified' : '⚠ Unverified'}
-                  </span>
-                  <span className="ml-2 px-2 py-1 bg-white bg-opacity-20 rounded-full text-xs text-white">
-                    {user?.subscription?.tier || 'Free'} Plan
-                  </span>
+              <div className="flex-grow ml-4">
+                <div>
+                  <h1 className="text-2xl font-bold text-white">
+                    {user?.name?.first} {user?.name?.last}
+                  </h1>
+                  <p className="text-blue-100">{user?.email}</p>
+                  <div className="flex items-center mt-2">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      user?.emailVerified 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {user?.emailVerified ? '✓ Verified' : '⚠ Unverified'}
+                    </span>
+                    <span className="ml-2 px-2 py-1 bg-white bg-opacity-20 rounded-full text-xs text-white">
+                      {user?.subscription?.tier || 'Free'} Plan
+                    </span>
+                  </div>
                 </div>
               </div>
+              <button
+                onClick={handleSignOut}
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors flex-shrink-0 shadow-md hover:shadow-lg"
+              >
+                Sign Out
+              </button>
             </div>
           </div>
 
