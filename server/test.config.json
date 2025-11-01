@@ -1,7 +1,7 @@
 {
   "name": "resume-builder-test-config",
   "version": "1.0.0",
-  "description": "Test configuration for Resume Builder Authentication System",
+  "description": "Test configuration for GrowZen Authentication System",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",

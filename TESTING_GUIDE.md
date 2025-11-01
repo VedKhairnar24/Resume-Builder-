@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive testing guidelines for the Resume Builder authentication system. The testing suite covers unit tests, integration tests, end-to-end tests, and security testing.
+This document provides comprehensive testing guidelines for the GrowZen authentication system. The testing suite covers unit tests, integration tests, end-to-end tests, and security testing.
 
 ## Test Structure
 

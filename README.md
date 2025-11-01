@@ -1,4 +1,4 @@
-# gitResume Builder
+# gitGrowZen
 
 A full-stack web application for creating and managing professional resumes. Built with React, Node.js, Express, and MongoDB.
 
@@ -131,7 +131,7 @@ resume-builder/
 
 - Multiple resume templates
 - PDF export functionality
-- Drag and drop resume builder
+- Drag and drop GrowZen
 - Social media sharing
 - Resume analytics
 

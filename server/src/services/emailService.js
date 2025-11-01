@@ -20,11 +20,11 @@ export const sendEmailVerification = async (user, token) => {
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
     to: user.email,
-    subject: 'Verify Your Email Address - Resume Builder',
+    subject: 'Verify Your Email Address - GrowZen',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to Resume Builder!</h1>
+          <h1 style="color: white; margin: 0; font-size: 28px;">Welcome to GrowZen!</h1>
         </div>
         
         <div style="padding: 30px; background: #f8f9fa;">
@@ -59,7 +59,7 @@ export const sendEmailVerification = async (user, token) => {
         
         <div style="background: #343a40; padding: 20px; text-align: center;">
           <p style="color: #adb5bd; margin: 0; font-size: 14px;">
-            © 2024 Resume Builder. All rights reserved.
+            © 2024 GrowZen. All rights reserved.
           </p>
         </div>
       </div>
@@ -84,7 +84,7 @@ export const sendPasswordReset = async (user, token) => {
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
     to: user.email,
-    subject: 'Reset Your Password - Resume Builder',
+    subject: 'Reset Your Password - GrowZen',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
@@ -123,7 +123,7 @@ export const sendPasswordReset = async (user, token) => {
         
         <div style="background: #343a40; padding: 20px; text-align: center;">
           <p style="color: #adb5bd; margin: 0; font-size: 14px;">
-            © 2024 Resume Builder. All rights reserved.
+            © 2024 GrowZen. All rights reserved.
           </p>
         </div>
       </div>
@@ -146,11 +146,11 @@ export const sendWelcomeEmail = async (user) => {
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
     to: user.email,
-    subject: 'Welcome to Resume Builder! 🎉',
+    subject: 'Welcome to GrowZen! 🎉',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Welcome to Resume Builder!</h1>
+          <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Welcome to GrowZen!</h1>
         </div>
         
         <div style="padding: 30px; background: #f8f9fa;">
@@ -187,7 +187,7 @@ export const sendWelcomeEmail = async (user) => {
         
         <div style="background: #343a40; padding: 20px; text-align: center;">
           <p style="color: #adb5bd; margin: 0; font-size: 14px;">
-            © 2024 Resume Builder. All rights reserved.
+            © 2024 GrowZen. All rights reserved.
           </p>
         </div>
       </div>

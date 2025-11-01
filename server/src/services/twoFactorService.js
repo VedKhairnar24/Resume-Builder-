@@ -4,8 +4,8 @@ import QRCode from 'qrcode';
 // Generate 2FA secret for user
 export const generate2FASecret = (user) => {
   const secret = speakeasy.generateSecret({
-    name: `Resume Builder (${user.email})`,
-    issuer: 'Resume Builder',
+    name: `GrowZen (${user.email})`,
+    issuer: 'GrowZen',
     length: 32
   });
 

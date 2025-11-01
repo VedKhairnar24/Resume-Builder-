@@ -1,8 +1,8 @@
-# Resume Builder - Authentication & Account Management System
+# GrowZen - Authentication & Account Management System
 
 ## Overview
 
-This document outlines the comprehensive authentication and account management system implemented for the Resume Builder application. The system provides secure, user-friendly authentication with advanced features including email verification, password reset, profile management, and security controls.
+This document outlines the comprehensive authentication and account management system implemented for the GrowZen application. The system provides secure, user-friendly authentication with advanced features including email verification, password reset, profile management, and security controls.
 
 ## 🚀 Features Implemented
 

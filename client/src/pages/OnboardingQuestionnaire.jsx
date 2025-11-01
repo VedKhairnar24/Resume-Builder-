@@ -144,7 +144,7 @@ const OnboardingQuestionnaire = () => {
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-white">Welcome to Resume Builder!</h1>
+                <h1 className="text-2xl font-bold text-white">Welcome to GrowZen!</h1>
                 <p className="text-blue-100 mt-1">Let's personalize your experience</p>
               </div>
               <div className="text-right">

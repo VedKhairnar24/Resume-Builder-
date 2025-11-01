@@ -20,31 +20,34 @@ const Header = () => {
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold text-white">
-                Resume<span className="text-teal-500">Builder</span>
+              Grow<span className="text-teal-500">Zen</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <NavLink to="/" className={navLinkClasses} end>
+            {/* <NavLink to="/" className={navLinkClasses} end>
               Home
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/templates" className={navLinkClasses}>
-              Templates
+              Resume-Templates
             </NavLink>
             <NavLink to="/career-explorer" className={navLinkClasses}>
-              Career Explorer
+              Career-Explorer
             </NavLink>
             <NavLink to="/linkedin-optimizer" className={navLinkClasses}>
-              LinkedIn Optimizer
+              LinkedIn-Optimizer
             </NavLink>
             <NavLink to="/email-templates" className={navLinkClasses}>
-              Email Templates
+              Email-Templates
+            </NavLink>
+            <NavLink to="/resource-library" className={navLinkClasses}>
+              Resource-Library
             </NavLink>
             {isAuthenticated && (
               <NavLink to="/create-resume" className={navLinkClasses}>
-                Create Resume
+                Create-Resume
               </NavLink>
             )}
           </div>
@@ -141,6 +144,13 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Email Templates
+          </NavLink>
+          <NavLink
+            to="/resource-library"
+            className={navLinkClasses}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Resource Library
           </NavLink>
           {isAuthenticated && (
             <NavLink

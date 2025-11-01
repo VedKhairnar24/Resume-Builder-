@@ -57,7 +57,7 @@ app.use('/api/export', exportRoutes);
 
 // Base route
 app.get('/', (req, res) => {
-  res.json({ message: 'Resume Builder API' });
+  res.json({ message: 'GrowZen API' });
 });
 
 // Error handler

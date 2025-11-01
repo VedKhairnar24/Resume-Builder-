@@ -198,7 +198,7 @@ export const verifyEmail = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Email verified successfully! Welcome to Resume Builder!'
+      message: 'Email verified successfully! Welcome to GrowZen!'
     });
   } catch (err) {
     console.error('Email verification error:', err);
