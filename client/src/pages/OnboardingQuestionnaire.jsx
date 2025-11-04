@@ -167,7 +167,7 @@ const OnboardingQuestionnaire = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 {currentQuestion.title}
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-lg font-sans ">
                 {currentQuestion.subtitle}
               </p>
             </div>
@@ -180,7 +180,7 @@ const OnboardingQuestionnaire = () => {
                   value={formData[currentQuestion.id]}
                   onChange={(e) => handleInputChange(e.target.value)}
                   placeholder={currentQuestion.placeholder}
-                  className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-6 py-4 text-lg font-sans  border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   autoFocus
                 />
               )}
@@ -201,7 +201,7 @@ const OnboardingQuestionnaire = () => {
                             : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                         }`}
                       >
-                        <span className="text-lg font-medium">{label}</span>
+                        <span className="text-lg font-sans  font-medium">{label}</span>
                       </button>
                     );
                   })}
@@ -261,7 +261,7 @@ const OnboardingQuestionnaire = () => {
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-lg font-medium text-blue-900">Quick Setup Tips</h3>
+              <h3 className="text-lg font-sans  font-medium text-blue-900">Quick Setup Tips</h3>
               <p className="mt-1 text-blue-700">
                 This questionnaire helps us personalize your resume templates and suggest relevant content. 
                 You can always update these preferences later in your profile settings.

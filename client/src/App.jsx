@@ -18,17 +18,10 @@ import ProfileDashboard from './pages/Profile';
 
 function App() {
   useEffect(() => {
-    // Apply sticky background styles to the body
-    // Using a CSS gradient as a placeholder for the generated image
-    document.body.style.backgroundImage = "radial-gradient(circle at 30% 50%, #7EF0C8, #3CB7A5, #2A94F4, #032B5C)";
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-
     // Cleanup function to remove styles when component unmounts
     return () => {
       document.body.style.backgroundImage = '';
+      // You might want to clear other styles here if needed in the future
     };
   }, []);
 
@@ -36,7 +29,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
-          <Header />
+          <Header /> 
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />

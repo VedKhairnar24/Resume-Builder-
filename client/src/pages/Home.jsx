@@ -4,18 +4,13 @@ import { Compass, Linkedin, Mail, FileText, ArrowRight, Library } from 'lucide-r
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white font-sans">
       {/* 1. Hero Section */}
-      <header className="py-24 md:py-32 text-center bg-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-50 rounded-full filter blur-3xl opacity-50"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-50 rounded-full filter blur-3xl opacity-50"></div>
-        </div>
+      <header className="py-24 md:py-32 text-center relative">
 
         <div className="max-w-5xl mx-auto px-6 relative z-10">
           <h1
-            className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight"
+            className="text-5xl md:text-6xl font-sans font-bold text-gray-900 mb-6 tracking-tight leading-tight"
             data-aos="fade-up"
           >
             Grow Your Career, Build Your Brand,
@@ -24,20 +19,20 @@ const Home = () => {
             </span>
           </h1>
           
-          <p className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+          <p className="text-lg font-sans  text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
             Explore your career path, optimize your LinkedIn, write better emails, and create impressive resumes — all in one place.
           </p>
           
           <div className="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
             <Link
               href="/create-resume"
-              className="inline-flex items-center bg-blue-600 text-white font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center bg-blue-600 text-white font-bold text-lg font-sans  py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 hover:scale-105 transition-all duration-300"
             >
               Get Started
             </Link>
             <Link
               to="#tools"
-              className="inline-flex items-center bg-white text-gray-700 font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-300 border border-gray-200"
+              className="inline-flex items-center bg-white text-gray-700 font-bold text-lg font-sans  py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 hover:scale-105 transition-all duration-300 border border-gray-200"
             >
               Explore Tools
             </Link>
@@ -98,7 +93,7 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Every Step Covered</h2>
-          <p className="text-lg text-gray-600 mb-12">From discovering your path to presenting yourself professionally.</p>
+          <p className="text-lg font-sans  text-gray-600 mb-12">From discovering your path to presenting yourself professionally.</p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
             <HowItHelpsStep number="1" title="Explore" description="Discover career paths" />
@@ -129,7 +124,7 @@ const ServiceCard = ({ icon, title, tagline, features, link }) => (
       ))}
     </ul>
     <Link to={link} className="mt-auto text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2">
-      Learn More <ArrowRight className="w-4 h-4" />
+      {title} <ArrowRight className="w-4 h-4" />
     </Link>
   </div>
 );

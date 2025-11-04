@@ -54,7 +54,7 @@ const EducationSection = ({ control, errors, fields, onAdd, onRemove }) => {
               />
             </svg>
           </div>
-          <p className="text-lg font-medium">No education entries yet</p>
+          <p className="text-lg font-sans  font-medium">No education entries yet</p>
           <p className="text-sm">Click "Add Education" to get started</p>
         </div>
       ) : (
@@ -65,7 +65,7 @@ const EducationSection = ({ control, errors, fields, onAdd, onRemove }) => {
             return (
               <div key={field.id} className="bg-gray-50 border border-gray-200 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-sans  font-semibold text-gray-900">
                     Education #{index + 1}
                   </h3>
                   <button

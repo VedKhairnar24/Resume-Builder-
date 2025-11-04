@@ -93,7 +93,7 @@ const ResourceSection = ({ icon, title, items }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((item, index) => (
         <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-          <h3 className="font-semibold text-lg text-gray-800 mb-2">{item.title}</h3>
+          <h3 className="font-semibold text-lg font-sans  text-gray-800 mb-2">{item.title}</h3>
           <p className="text-gray-600 text-sm">{item.description}</p>
         </div>
       ))}
@@ -120,7 +120,7 @@ const ResourceLibrary = () => {
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-16">
           <h1 className="text-5xl font-extrabold text-gray-900 mb-4">Resource Library</h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg font-sans  text-gray-600 max-w-3xl mx-auto">
             A practical learning space packed with clear, beginner-friendly guides to help you make informed career decisions and grow confidently at every stage.
           </p>
         </header>
@@ -154,7 +154,7 @@ const ResourceLibrary = () => {
               ))}
             </div>
             <div className="mt-10 bg-blue-50 border border-blue-200 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                <h3 className="text-lg font-sans  font-semibold text-blue-900 mb-3 flex items-center gap-2">
                     <Download className="w-5 h-5" /> Additional Resources
                 </h3>
                 <div className="text-blue-800 space-y-2 text-sm">

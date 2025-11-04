@@ -25,7 +25,7 @@ const AchievementsSection = ({ control, errors, fields, onAdd, onRemove }) => {
           {fields.map((field, index) => (
             <div key={field.id} className="border border-gray-200 rounded-lg p-4">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-lg font-sans  font-medium text-gray-900">
                   Achievement #{index + 1}
                 </h3>
                 <button

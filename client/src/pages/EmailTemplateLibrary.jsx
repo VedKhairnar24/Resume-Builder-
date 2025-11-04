@@ -169,7 +169,7 @@ const EmailTemplateLibrary = () => {
             {/* Saved Templates Section */}
             {saved.length > 0 && (
               <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                <h3 className="text-lg font-sans  font-semibold text-gray-800 mb-3 flex items-center gap-2">
                   <BookMarked className="w-5 h-5 text-yellow-500" /> Saved Templates
                 </h3>
                 <div className="flex flex-wrap gap-3">
@@ -184,7 +184,7 @@ const EmailTemplateLibrary = () => {
 
             {/* Tips Sidebar */}
             <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <h3 className="text-lg font-sans  font-semibold text-blue-900 mb-3 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5" /> Tips for Effective Communication
               </h3>
               <ul className="list-disc list-inside text-sm text-blue-800 space-y-2">
