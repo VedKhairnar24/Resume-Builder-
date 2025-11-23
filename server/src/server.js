@@ -44,11 +44,15 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 import resumeRoutes from './routes/resumeRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import exportRoutes from './routes/exportRoutes.js';
+import emailRoutes from "./routes/emailRoutes.js";
+
 
 // Mount Routes
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/export', exportRoutes);
+app.use("/api/email", emailRoutes);
+
 
 // Base route
 app.get('/', (req, res) => {

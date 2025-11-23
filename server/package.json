@@ -19,6 +19,8 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
+    "@google/genai": "^1.30.0",
+    "@google/generative-ai": "^0.24.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "connect-mongo": "^5.0.0",
@@ -37,6 +39,7 @@
     "mongoose": "^7.5.0",
     "morgan": "^1.10.0",
     "nodemailer": "^7.0.10",
+    "openai": "^6.9.1",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",

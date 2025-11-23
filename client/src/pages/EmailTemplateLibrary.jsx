@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Mail, BookMarked, Clipboard, MessageSquare, Star } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
+import api from "../services/api";
 
 const templatesData = [
   {
@@ -10,47 +13,43 @@ const templatesData = [
     preview:
       "I wanted to follow up regarding my application for the Software Engineer Intern role...",
     subject: "Follow-Up on Software Engineer Intern Application",
-    fullText: `Dear [Hiring Manager’s Name],\n\nI hope you’re doing well. I wanted to follow up regarding my application for the Software Engineer Intern position submitted on [Date]. I remain very interested in the opportunity to contribute to [Company Name] and would be happy to provide any additional information if needed.\n\nThank you for your time and consideration. I look forward to hearing from you.\n\nBest regards,\n[Your Full Name]\n[Your Contact Information]`,
+    fullText: `Dear [Hiring Manager’s Name],\n\nI hope you’re doing well...`,
   },
   {
     id: "interview-thank-you",
     title: "Thank-You After Interview",
     scenario: "Follow-Up & Thank You",
     tone: "Professional Casual",
-    preview:
-      "Thank you again for taking the time to speak with me today about the...",
+    preview: "Thank you again for taking the time to speak with me today about the...",
     subject: "Thank You - [Job Title] Interview",
-    fullText: `Hi [Interviewer's Name],\n\nThank you again for taking the time to speak with me today about the [Job Title] role. I really enjoyed learning more about the team and the position, and I am very excited about the opportunity to join [Company Name].\n\nI look forward to hearing from you about the next steps.\n\nBest regards,\n[Your Name]`,
+    fullText: `Hi [Interviewer's Name],\n\nThank you again...`,
   },
   {
     id: "networking-outreach",
     title: "Networking Outreach to Alumni",
     scenario: "Networking & Outreach",
     tone: "Professional Casual",
-    preview:
-      "My name is [Your Name], and I am a current student at [Your University]...",
+    preview: "My name is [Your Name], and I am a current student at...",
     subject: "Question from a fellow [Your University] student",
-    fullText: `Hi [Alumni's Name],\n\nMy name is [Your Name], and I am a current student at [Your University] studying [Your Major]. I found your profile on LinkedIn and was impressed by your work at [Their Company].\n\nI am very interested in a career in [Their Industry] and would love to hear about your experience. Would you be open to a brief 15-minute chat sometime in the next few weeks?\n\nThank you for your time.\n\nBest,\n[Your Name]`,
+    fullText: `Hi [Alumni's Name],\n\nMy name is [Your Name]...`,
   },
   {
     id: "recommendation-request",
     title: "Request for Letter of Recommendation",
     scenario: "Academic Requests",
     tone: "Formal",
-    preview:
-      "I am writing to request a letter of recommendation for my application to...",
+    preview: "I am writing to request a letter of recommendation for my application...",
     subject: "Recommendation Request for [Your Name]",
-    fullText: `Dear Professor [Professor's Last Name],\n\nI hope this email finds you well. I am writing to request a letter of recommendation for my application to [Program/Job] at [University/Company]. The deadline is [Date].\n\nI was a student in your [Course Name] class during the [Semester/Year] and particularly enjoyed [Specific Topic]. I have attached my resume and a draft of my personal statement for your reference.\n\nPlease let me know if you would be comfortable writing a supportive letter for me. Thank you for your consideration.\n\nSincerely,\n[Your Full Name]`,
+    fullText: `Dear Professor [Professor's Last Name],\n\nI hope this email finds you well...`,
   },
   {
     id: "project-update",
     title: "Project Progress Update",
     scenario: "Team & Project Communication",
     tone: "Friendly",
-    preview:
-      "Just a quick update on the [Project Name] project. We have completed...",
+    preview: "Just a quick update on the project...",
     subject: "Update on [Project Name]",
-    fullText: `Hi Team,\n\nJust a quick update on the [Project Name] project. We have completed the initial design phase and are on track to begin development next week.\n\nKey accomplishments this week:\n- [Accomplishment 1]\n- [Accomplishment 2]\n\nNext steps:\n- [Next Step 1]\n\nLet me know if you have any questions.\n\nThanks,\n[Your Name]`,
+    fullText: `Hi Team,\n\nJust a quick update...`,
   },
 ];
 
@@ -64,6 +63,8 @@ const communicationTips = [
 ];
 
 const EmailTemplateLibrary = () => {
+  const { isAuthenticated } = useAuth();
+
   const [activeScenario, setActiveScenario] = useState("All");
   const [selectedTemplate, setSelectedTemplate] = useState(templatesData[0]);
   const [saved, setSaved] = useState([]);
@@ -74,8 +75,7 @@ const EmailTemplateLibrary = () => {
   const scenarios = ["All", ...new Set(templatesData.map((t) => t.scenario))];
 
   const filteredTemplates = templatesData.filter(
-    (template) =>
-      activeScenario === "All" || template.scenario === activeScenario
+    (template) => activeScenario === "All" || template.scenario === activeScenario
   );
 
   const handleCopy = () => {
@@ -84,29 +84,41 @@ const EmailTemplateLibrary = () => {
     setTimeout(() => setCopySuccess(""), 2000);
   };
 
+  // -----------------------------------------
+  //  Axios API Request
+  // -----------------------------------------
   const generateEmail = async () => {
     if (!prompt.trim()) return;
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/generate-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
+      const token = localStorage.getItem("token");
 
-      const data = await res.json();
+      const res = await api.post(
+        "/email/generate",
+        { prompt },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      if (data.email) {
+      if (res.data?.email) {
         setSelectedTemplate((prev) => ({
           ...prev,
-          fullText: data.email,
-          subject: data.subject || "Generated Email",
+          fullText: res.data.email,
+          subject: res.data.subject || "Generated Email",
         }));
       }
-    } catch (err) {
-      console.error("Error generating email:", err);
+    } catch (error) {
+      console.error("Gemini Email Generator Error:", error);
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to generate the email. Try again later."
+      );
     }
 
     setLoading(false);
@@ -128,7 +140,7 @@ const EmailTemplateLibrary = () => {
             Email & Communication Library
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Write clear, confident, and professional emails with our ready-to-use templates.
+            Write clear, confident, and professional emails with our AI tools and templates.
           </p>
         </header>
 
@@ -138,7 +150,7 @@ const EmailTemplateLibrary = () => {
           {/* LEFT SIDEBAR */}
           <div className="lg:col-span-1 space-y-6">
 
-            {/* SCENARIO FILTER */}
+            {/* SCENARIOS */}
             <div className="bg-white p-4 rounded-xl shadow-sm">
               <h3 className="text-sm font-semibold text-gray-500 uppercase mb-3">
                 Scenarios
@@ -160,7 +172,7 @@ const EmailTemplateLibrary = () => {
               </div>
             </div>
 
-            {/* TEMPLATE CARDS */}
+            {/* TEMPLATE LIST */}
             <div className="space-y-3">
               {filteredTemplates.map((template) => (
                 <div
@@ -172,9 +184,7 @@ const EmailTemplateLibrary = () => {
                     }`}
                 >
                   <div className="flex justify-between items-start">
-                    <h4 className="font-bold text-gray-800">
-                      {template.title}
-                    </h4>
+                    <h4 className="font-bold text-gray-800">{template.title}</h4>
 
                     <button
                       onClick={(e) => {
@@ -203,30 +213,44 @@ const EmailTemplateLibrary = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT CONTENT */}
           <div className="lg:col-span-2 space-y-8">
 
             {/* GENERATOR */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Write Email From Context
+                Generate Email From Context
               </h3>
 
-              <textarea
-                placeholder="Explain what email you want... 
-e.g. 'Follow up after interview for software engineer role'"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                className="w-full h-28 p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-0 resize-none"
-              />
+              {!isAuthenticated ? (
+                <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                  Please{" "}
+                  <Link
+                    to="/login"
+                    className="text-red-600 underline font-semibold"
+                  >
+                    log in
+                  </Link>{" "}
+                  to use AI email generator.
+                </div>
+              ) : (
+                <>
+                  <textarea
+                    placeholder="Write the context here..."
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    className="w-full h-28 p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-0 resize-none"
+                  />
 
-              <button
-                onClick={generateEmail}
-                disabled={loading}
-                className="mt-3 bg-gray-900 text-white px-5 py-2 rounded-lg hover:bg-black transition"
-              >
-                {loading ? "Generating..." : "Generate Email"}
-              </button>
+                  <button
+                    onClick={generateEmail}
+                    disabled={loading}
+                    className="mt-3 bg-gray-900 text-white px-5 py-2 rounded-lg hover:bg-black transition"
+                  >
+                    {loading ? "Generating..." : "Generate Email"}
+                  </button>
+                </>
+              )}
             </div>
 
             {/* EDITOR */}
@@ -266,7 +290,7 @@ e.g. 'Follow up after interview for software engineer role'"
               </div>
             </div>
 
-            {/* SAVED TEMPLATES */}
+            {/* SAVED */}
             {saved.length > 0 && (
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
@@ -291,15 +315,15 @@ e.g. 'Follow up after interview for software engineer role'"
               </div>
             )}
 
-            {/* COMMUNICATION TIPS */}
+            {/* TIPS */}
             <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
-              <h3 className="text-lg font-sans  font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5" /> Tips for Effective Communication
               </h3>
 
               <ul className="list-disc list-inside text-sm text-blue-800 space-y-2">
-                {communicationTips.map((tip, index) => (
-                  <li key={index}>{tip}</li>
+                {communicationTips.map((tip, i) => (
+                  <li key={i}>{tip}</li>
                 ))}
               </ul>
             </div>
