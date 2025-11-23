@@ -22,7 +22,7 @@ const ResumeTemplateFive = ({ data }) => {
         <div>
           {experience && experience.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Experience</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Experience</h2>
               {experience.map((e, i) => (
                 <div key={i} className="mb-4">
                   <h3 className="font-semibold text-gray-900">{e.position} <span className="text-sm text-gray-500">@ {e.company}</span></h3>
@@ -35,7 +35,7 @@ const ResumeTemplateFive = ({ data }) => {
 
           {projects && projects.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Projects</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Projects</h2>
               {projects.map((p, i) => (
                 <div key={i} className="mb-3">
                   <h4 className="font-medium text-gray-900">{p.title}</h4>
@@ -50,7 +50,7 @@ const ResumeTemplateFive = ({ data }) => {
         <div>
           {education && education.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Education</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Education</h2>
               {education.map((edu, i) => (
                 <div key={i} className="mb-3">
                   <h4 className="font-medium text-gray-900">{edu.degree} {edu.field && `in ${edu.field}`}</h4>
@@ -62,7 +62,7 @@ const ResumeTemplateFive = ({ data }) => {
 
           {skills && skills.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Skills</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Skills</h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((s, idx) => (
                   <span key={idx} className="bg-teal-100 text-teal-800 px-3 py-1 rounded text-xs">{s.skill}</span>
@@ -73,7 +73,7 @@ const ResumeTemplateFive = ({ data }) => {
 
           {certifications && certifications.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Certifications</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Certifications</h2>
               <ul className="text-sm text-gray-600 space-y-1">
                 {certifications.map((c, i) => (
                   <li key={i}>{c.title} — <span className="text-gray-500">{c.issuer}</span></li>
@@ -84,7 +84,7 @@ const ResumeTemplateFive = ({ data }) => {
 
           {achievements && achievements.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">Achievements</h2>
+              <h2 className="text-lg font-sans  font-semibold text-gray-800 mb-3">Achievements</h2>
               {achievements.map((a, i) => (
                 <div key={i} className="mb-2">
                   <p className="text-gray-900 font-medium">{a.title}</p>

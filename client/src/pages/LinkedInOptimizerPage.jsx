@@ -26,7 +26,7 @@ const LinkedInAnalyzer = () => (
 
     <div className="relative mt-8">
         <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex items-center justify-center z-10 rounded-xl">
-            <span className="px-4 py-2 bg-yellow-200 text-yellow-800 text-lg font-semibold rounded-full">Coming Soon</span>
+            <span className="px-4 py-2 bg-yellow-200 text-yellow-800 text-lg font-sans  font-semibold rounded-full">Coming Soon</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 blur-sm">
             <div className="md:col-span-1 bg-white p-6 rounded-xl shadow-md text-center">
@@ -353,7 +353,7 @@ const Tutorials = () => {
             <span>{tutorial.level}</span>
           </div>
         </div>
-        <h4 className="text-lg font-bold text-gray-900 mb-2">{tutorial.title}</h4>
+        <h4 className="text-lg font-sans  font-bold text-gray-900 mb-2">{tutorial.title}</h4>
         <p className="text-sm text-gray-600 mb-4">{tutorial.preview}</p>
         <div className="flex items-center justify-between">
           <button className="text-blue-600 font-semibold text-sm hover:text-blue-700">Read More</button>
@@ -389,7 +389,7 @@ const Tutorials = () => {
       {/* My Library (Saved Tutorials) */}
       {saved.length > 0 && (
         <div className="bg-yellow-50 border border-yellow-200 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-yellow-900 mb-3">My Saved Tutorials</h3>
+          <h3 className="text-lg font-sans  font-semibold text-yellow-900 mb-3">My Saved Tutorials</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {tutorialData.filter(t => saved.includes(t.id)).map(tutorial => (
               <div key={tutorial.id} className="bg-white p-3 rounded-lg shadow-sm flex justify-between items-center">
@@ -420,7 +420,7 @@ const Tutorials = () => {
             filteredTutorials.map(tutorial => <TutorialCard key={tutorial.id} tutorial={tutorial} />)
           ) : (
             <div className="md:col-span-2 text-center py-12 text-gray-500">
-              <h4 className="text-lg font-semibold">No tutorials found.</h4>
+              <h4 className="text-lg font-sans  font-semibold">No tutorials found.</h4>
               <p>Try adjusting your search or category filter.</p>
             </div>
           )}
@@ -456,11 +456,11 @@ const LinkedInOptimizerPage = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4">
+    <div className="min-h-screen py-10 px-4 bg-white font-sans">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-10">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">LinkedIn & Online Presence Optimizer</h1>
-          <p className="text-lg text-gray-600">Build a powerful personal brand that gets you noticed.</p>
+          <p className="text-lg font-sans  text-gray-600">Build a powerful personal brand that gets you noticed.</p>
         </header>
 
         <div className="border-b border-gray-200 mb-8">

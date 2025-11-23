@@ -140,7 +140,7 @@ const TemplatesPage = () => {
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
             Stunning <span className="text-cyan-500">Templates</span>
           </h1>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-8">
+          <p className="text-gray-600 text-lg font-sans  max-w-3xl mx-auto mb-8">
             Choose from our collection of professionally designed resume templates.
             Pick a template, preview it, and start building your resume instantly.
           </p>
@@ -278,12 +278,12 @@ const TemplatesPage = () => {
         {/* Call to Action */}
         <div className="text-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-8 text-white shadow-2xl">
           <h2 className="text-2xl font-bold mb-4">Ready to Create Your Resume?</h2>
-          <p className="text-lg mb-6 opacity-90">
+          <p className="text-lg font-sans  mb-6 opacity-90">
             Choose any template and start building your professional resume in minutes.
           </p>
           <Link
             to="/create-resume"
-            className="bg-white text-cyan-600 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors inline-block"
+            className="bg-white text-cyan-600 px-8 py-3 rounded-xl font-bold text-lg font-sans  hover:bg-gray-100 transition-colors inline-block"
           >
             Start Building Now
           </Link>

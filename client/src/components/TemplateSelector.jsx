@@ -85,7 +85,7 @@ const TemplateSelector = ({ selectedTemplate, onTemplateChange, resumeData }) =>
 
       {/* Live Preview */}
       {/* <div className="border-t pt-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Live Preview</h3>
+        <h3 className="text-lg font-sans  font-semibold text-gray-900 mb-4">Live Preview</h3>
         <div className="border border-gray-300 rounded-lg overflow-hidden">
           <div className="bg-gray-100 px-4 py-2 border-b">
             <div className="flex items-center space-x-2">

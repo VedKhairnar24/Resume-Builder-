@@ -150,8 +150,8 @@ const EmailTemplateLibrary = () => {
                     key={scenario}
                     onClick={() => setActiveScenario(scenario)}
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${activeScenario === scenario
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                   >
                     {scenario}
@@ -167,8 +167,8 @@ const EmailTemplateLibrary = () => {
                   key={template.id}
                   onClick={() => setSelectedTemplate(template)}
                   className={`p-4 rounded-xl cursor-pointer transition-all duration-200 ${selectedTemplate.id === template.id
-                      ? "bg-blue-100 border-2 border-blue-500 shadow-lg"
-                      : "bg-white hover:bg-gray-50 border-2 border-transparent"
+                    ? "bg-blue-100 border-2 border-blue-500 shadow-lg"
+                    : "bg-white hover:bg-gray-50 border-2 border-transparent"
                     }`}
                 >
                   <div className="flex justify-between items-start">
@@ -184,8 +184,8 @@ const EmailTemplateLibrary = () => {
                     >
                       <Star
                         className={`w-5 h-5 ${saved.includes(template.id)
-                            ? "text-yellow-500 fill-current"
-                            : "text-gray-400 hover:text-yellow-400"
+                          ? "text-yellow-500 fill-current"
+                          : "text-gray-400 hover:text-yellow-400"
                           }`}
                       />
                     </button>
@@ -270,8 +270,7 @@ e.g. 'Follow up after interview for software engineer role'"
             {saved.length > 0 && (
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                  <BookMarked className="w-5 h-5 text-yellow-500" />
-                  Saved Templates
+                  <BookMarked className="w-5 h-5 text-yellow-500" /> Saved Templates
                 </h3>
 
                 <div className="flex flex-wrap gap-3">
@@ -294,7 +293,7 @@ e.g. 'Follow up after interview for software engineer role'"
 
             {/* COMMUNICATION TIPS */}
             <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <h3 className="text-lg font-sans  font-semibold text-blue-900 mb-3 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5" /> Tips for Effective Communication
               </h3>
 

@@ -164,9 +164,9 @@ const ProfileDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 bg-white font-sans">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
             <div className="flex items-start justify-between">
@@ -438,7 +438,7 @@ const ProfileDashboard = () => {
                 
                 {/* Password Change */}
                 <form onSubmit={handlePasswordUpdate} className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Change Password</h3>
+                  <h3 className="text-lg font-sans  font-medium text-gray-900 mb-4">Change Password</h3>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
@@ -485,7 +485,7 @@ const ProfileDashboard = () => {
 
                 {/* Data Export */}
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Data Export</h3>
+                  <h3 className="text-lg font-sans  font-medium text-gray-900 mb-4">Data Export</h3>
                   <p className="text-gray-600 mb-4">
                     Download all your data including profile information and resumes in JSON format.
                   </p>
@@ -507,7 +507,7 @@ const ProfileDashboard = () => {
                 
                 {/* Account Information */}
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
+                  <h3 className="text-lg font-sans  font-medium text-gray-900 mb-4">Account Information</h3>
                   <div className="space-y-2">
                     <p><span className="font-medium">Email:</span> {user?.email}</p>
                     <p><span className="font-medium">Member since:</span> {new Date(user?.createdAt).toLocaleDateString()}</p>
@@ -518,7 +518,7 @@ const ProfileDashboard = () => {
 
                 {/* Delete Account */}
                 <div className="bg-red-50 border border-red-200 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-red-900 mb-4">Delete Account</h3>
+                  <h3 className="text-lg font-sans  font-medium text-red-900 mb-4">Delete Account</h3>
                   <p className="text-red-700 mb-4">
                     This action cannot be undone. This will permanently delete your account and all associated data.
                   </p>

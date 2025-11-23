@@ -31,10 +31,7 @@ const TemplateSection = () => {
   ];
 
   return (
-    <section className="py-24 text-center relative overflow-hidden">
-      {/* Decorative background blur */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-teal-100 rounded-full blur-3xl opacity-20 -z-10"></div>
-
+    <section className="py-24 text-center relative overflow-hidden bg-white font-sans">
       <div className="max-w-6xl mx-auto px-6 relative">
         {/* Heading */}
         <h2
@@ -44,7 +41,7 @@ const TemplateSection = () => {
           Stunning <span className="text-teal-500">Templates</span>
         </h2>
         <p
-          className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto"
+          className="text-lg font-sans  text-gray-600 mb-12 max-w-2xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="100"
         >
@@ -70,7 +67,7 @@ const TemplateSection = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute bottom-4 left-4 text-left">
-                <h3 className="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-white text-lg font-sans  font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {template.title}
                 </h3>
               </div>

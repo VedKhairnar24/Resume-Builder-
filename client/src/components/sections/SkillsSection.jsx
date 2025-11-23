@@ -57,7 +57,7 @@ const SkillsSection = ({ control, errors, fields, onAdd, onRemove }) => {
 
       {fields.length === 0 ? (
         <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
-          <p className="text-lg font-medium">No skills added yet</p>
+          <p className="text-lg font-sans  font-medium">No skills added yet</p>
           <p className="text-sm">Click "Add Skill" to get started</p>
         </div>
       ) : (

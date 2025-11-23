@@ -51,7 +51,7 @@ const ResumeTemplateOne = ({ data }) => {
             <div key={index} className="mb-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-sans  font-semibold text-gray-900">
                     {edu.degree} {edu.field && `in ${edu.field}`}
                   </h3>
                   <p className="text-gray-600">{edu.institution}</p>
@@ -78,7 +78,7 @@ const ResumeTemplateOne = ({ data }) => {
             <div key={index} className="mb-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{exp.position}</h3>
+                  <h3 className="text-lg font-sans  font-semibold text-gray-900">{exp.position}</h3>
                   <p className="text-gray-600">{exp.company}</p>
                 </div>
                 <p className="text-sm text-gray-500">
@@ -120,7 +120,7 @@ const ResumeTemplateOne = ({ data }) => {
           </h2>
           {projects.map((project, index) => (
             <div key={index} className="mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">{project.title}</h3>
+              <h3 className="text-lg font-sans  font-semibold text-gray-900">{project.title}</h3>
               {project.link && (
                 <p className="text-blue-600 mb-2">
                   <a href={project.link}>View Project</a>
@@ -147,7 +147,7 @@ const ResumeTemplateOne = ({ data }) => {
           </h2>
           {certifications.map((cert, index) => (
             <div key={index} className="mb-2">
-              <h3 className="text-lg font-semibold text-gray-900">{cert.title}</h3>
+              <h3 className="text-lg font-sans  font-semibold text-gray-900">{cert.title}</h3>
               <p className="text-gray-600">{cert.issuer}</p>
               <p className="text-sm text-gray-500">{cert.date}</p>
             </div>
@@ -163,7 +163,7 @@ const ResumeTemplateOne = ({ data }) => {
           </h2>
           {achievements.map((achievement, index) => (
             <div key={index} className="mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">{achievement.title}</h3>
+              <h3 className="text-lg font-sans  font-semibold text-gray-900">{achievement.title}</h3>
               <p className="text-sm text-gray-500 mb-2">{achievement.date}</p>
               {achievement.description && (
                 <p className="text-gray-700">{achievement.description}</p>
